@@ -3,16 +3,26 @@ import ReactDOM from "react-dom";
 import CardSet from "./CardSet"
 
 class GameContainer extends Component {
+    constructor(props) {
+        super(props);
+        
+    }
+
     render() {
-        if (this.props.visible){
+        const gameState = this.props.gameState;
+        
+        if (this.props.visible && gameState){
             return (        
             <div>
-                <CardSet name="deck" faceUp="false" active="false" />
-                <CardSet name="hand" faceUp="true" active="true" />
-                <CardSet name="played" faceUp="true" active="false" />
-                <CardSet name="discard" faceUp="false" active="false" />
+                <CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" />
+                <CardSet cards={gameState.hand} faceUp={true} active={true} name="Hand"/>
+                <CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/>
+                <CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/>
             </div>
             );
+        }
+        else {
+            return (<div></div>);
         }
       }
 }

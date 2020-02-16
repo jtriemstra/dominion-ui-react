@@ -10,31 +10,24 @@ class DominionUi extends Component {
     super();
 
     this.state = {
-      value: ""
+      gameState: null
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleGameStart = this.handleGameStart.bind(this);
   }
 
-  handleChange(event) {
-    const { value } = event.target;
-    this.setState(() => {
-      return {
-        value
-      };
-    });
-  }
-
-  handleGameStart(gameState){
-    console.log(gameState);
+  handleGameStart(newState){
+    this.setState({gameState: newState});
   }
 
   render() {
+    const gameState = this.state.gameState;
+
     return (        
       <div>
          <Header />
         <SplashScreen onGameStart={this.handleGameStart} />
-        <GameContainer visible="false" />
+        <GameContainer visible="false" gameState={gameState} />
       </div>
     );
   }
