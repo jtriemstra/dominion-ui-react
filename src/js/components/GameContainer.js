@@ -6,6 +6,15 @@ class GameContainer extends Component {
     constructor(props) {
         super(props);
         
+        this.handlePlayCard = this.handlePlayCard.bind(this);
+    }
+
+    handlePlayCard(cardName){
+        fetch("http://localhost:8080/play?card=" + cardName)
+        .then(res => res.json())
+        .then((result) => {
+            this.props.onGameUpdate(result);
+        });
     }
 
     render() {
@@ -15,7 +24,7 @@ class GameContainer extends Component {
             return (        
             <div>
                 <CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" />
-                <CardSet cards={gameState.hand} faceUp={true} active={true} name="Hand"/>
+                <CardSet cards={gameState.hand} faceUp={true} active={true} name="Hand" onCardClick={this.handlePlayCard}/>
                 <CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/>
                 <CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/>
             </div>

@@ -13,10 +13,10 @@ class DominionUi extends Component {
       gameState: null
     };
 
-    this.handleGameStart = this.handleGameStart.bind(this);
+    this.handleNewState = this.handleNewState.bind(this);
   }
 
-  handleGameStart(newState){
+  handleNewState(newState){
     this.setState({gameState: newState});
   }
 
@@ -26,8 +26,8 @@ class DominionUi extends Component {
     return (        
       <div>
          <Header />
-        <SplashScreen onGameStart={this.handleGameStart} />
-        <GameContainer visible="false" gameState={gameState} />
+        <SplashScreen onGameStart={this.handleNewState} />
+        <GameContainer visible="false" gameState={gameState} onGameUpdate={this.handleNewState} />
       </div>
     );
   }
