@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Header from "./Header"
-import Ticker from "./Ticker"
+import Header from "./Header";
+import SplashScreen from './SplashScreen';
 
-class Form extends Component {
+
+class DominionUi extends Component {
   constructor() {
     super();
 
@@ -25,18 +26,13 @@ class Form extends Component {
 
   render() {
     return (        
-      <form>
-         <Header title={this.props.title} />
-         <Ticker />
-        <input
-          type="text"
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-      </form>
+      <div>
+         <Header />
+        <SplashScreen />
+      </div>
     );
   }
 }
 
-export default Form;
+export default DominionUi;
 
