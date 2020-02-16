@@ -25,7 +25,7 @@ class DominionUi extends Component {
 
     return (        
       <div>
-         <Header />
+        <Header />
         <SplashScreen onGameStart={this.handleNewState} />
         <GameContainer visible="false" gameState={gameState} onGameUpdate={this.handleNewState} />
       </div>
