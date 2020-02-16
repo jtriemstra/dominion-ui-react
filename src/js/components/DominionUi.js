@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Header from "./Header";
 import SplashScreen from './SplashScreen';
+import GameContainer from './GameContainer';
 
 
 class DominionUi extends Component {
@@ -24,11 +25,16 @@ class DominionUi extends Component {
     });
   }
 
+  handleGameStart(gameState){
+    console.log(gameState);
+  }
+
   render() {
     return (        
       <div>
          <Header />
-        <SplashScreen />
+        <SplashScreen onGameStart={this.handleGameStart} />
+        <GameContainer visible="false" />
       </div>
     );
   }
