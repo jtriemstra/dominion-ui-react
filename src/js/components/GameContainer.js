@@ -49,7 +49,7 @@ class GameContainer extends Component {
     }
 
     handleAction(optionName){
-        fetch("http://localhost:8080/action?option=" + optionName)
+        fetch("http://localhost:8080/action?options=" + optionName)
         .then(res => res.json())
         .then((result) => {
             this.props.onGameUpdate(result);
