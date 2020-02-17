@@ -48,8 +48,11 @@ class GameContainer extends Component {
         });
     }
 
-    handleAction(optionName){
-        fetch("http://localhost:8080/action?options=" + optionName)
+    handleAction(optionNames){
+        let url = "http://localhost:8080/action";
+        optionNames.map((name, index) => url += (index == 0 ? "?" : "&") + "options=" + name);
+
+        fetch(url)
         .then(res => res.json())
         .then((result) => {
             this.props.onGameUpdate(result);
