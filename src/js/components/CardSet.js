@@ -21,9 +21,7 @@ class CardSet extends Component {
 
     renderInactiveCards(){
         const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
-        return normalizedCards.map((card) => {
-            <li>{card.name}</li>
-        });
+        return normalizedCards.map((card) => <li>{card.name}</li>);
     }
 
     renderActiveCards(){
