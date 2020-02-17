@@ -63,15 +63,17 @@ class GameContainer extends Component {
         const gameState = this.props.gameState;
         const bank = this.state.bank;
         
+        
         if (this.props.visible && gameState){
             return (        
             <div>
                 <CardSet cards={bank} faceUp={true} active={gameState.hasBuys} name="Bank" onCardClick={this.handleBuyCard} />
-                <CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" />
-                <CardSet cards={gameState.hand} faceUp={true} active={true} name="Hand" onCardClick={this.handlePlayCard}/>
-                <CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/>
-                <CardSet cards={gameState.bought} faceUp={true} active={false} name="Bought"/>
-                <CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" /></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.hand} faceUp={true} active={true} name="Hand" onCardClick={this.handlePlayCard}/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.bought} faceUp={true} active={false} name="Bought"/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/></div>
+                <div style={{ clear:'both'}} />
                 <ActionChoices currentChoice={gameState.currentChoice} onOptionClick={this.handleAction}/>
                 <button onClick={this.handleCleanup}>Clean Up</button>
             </div>
