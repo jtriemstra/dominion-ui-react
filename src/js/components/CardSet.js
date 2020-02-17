@@ -26,7 +26,11 @@ class CardSet extends Component {
 
     renderActiveCards(){
         const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
-        return normalizedCards.map((card) => <li><a href="#" onClick={this.handleCardClick}>{card.name}</a></li>);
+
+        //TODO: keying off the name is flimsy, but ultimately would like the UI to be an image, not text anyway so a better solution may not matter
+        return normalizedCards.map((card) => 
+            <li><a href="#" onClick={this.handleCardClick}>{card.name}</a> {this.props.name === "Bank" ? "(" + card.cost + ")" : ""}</li>
+        );
     }
 
     renderFaceUpDown(){
