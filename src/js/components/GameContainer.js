@@ -12,6 +12,7 @@ class GameContainer extends Component {
         this.handlePlayCard = this.handlePlayCard.bind(this);
         this.handleBuyCard = this.handleBuyCard.bind(this);
         this.handleCleanup = this.handleCleanup.bind(this);
+        this.handleAction = this.handleAction.bind(this);
     }
 
     componentDidMount() {
@@ -47,6 +48,14 @@ class GameContainer extends Component {
         });
     }
 
+    handleAction(optionName){
+        fetch("http://localhost:8080/action?option=" + optionName)
+        .then(res => res.json())
+        .then((result) => {
+            this.props.onGameUpdate(result);
+        });
+    }
+
     render() {
         const gameState = this.props.gameState;
         const bank = this.state.bank;
@@ -60,7 +69,7 @@ class GameContainer extends Component {
                 <CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/>
                 <CardSet cards={gameState.bought} faceUp={true} active={false} name="Bought"/>
                 <CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/>
-                <ActionChoices currentChoice={gameState.currentChoice} />
+                <ActionChoices currentChoice={gameState.currentChoice} onOptionClick={this.handleAction}/>
                 <button onClick={this.handleCleanup}>Clean Up</button>
             </div>
             );
