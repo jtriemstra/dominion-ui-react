@@ -63,7 +63,7 @@ class GameContainer extends Component {
         if (this.props.visible && gameState){
             return (        
             <div>
-                <CardSet cards={bank} faceUp={true} active={true} name="Bank" onCardClick={this.handleBuyCard} />
+                <CardSet cards={bank} faceUp={true} active={gameState.hasBuys} name="Bank" onCardClick={this.handleBuyCard} />
                 <CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" />
                 <CardSet cards={gameState.hand} faceUp={true} active={true} name="Hand" onCardClick={this.handlePlayCard}/>
                 <CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/>
