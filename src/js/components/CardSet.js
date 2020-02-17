@@ -13,26 +13,48 @@ class CardSet extends Component {
         this.props.onCardClick(e.target.innerText);
     }
 
+    transformBank(bankObject) {
+        let cardList = [];
+        Object.keys(bankObject).map(cardName => cardList.push(bankObject[cardName]));
+        return cardList;
+    }
+
+    renderInactiveCards(){
+        const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
+        return normalizedCards.map((card) => {
+            <li>{card.name}</li>
+        });
+    }
+
+    renderActiveCards(){
+        const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
+        return normalizedCards.map((card) => <li><a href="#" onClick={this.handleCardClick}>{card.name}</a></li>);
+    }
+
+    renderFaceUpDown(){
+        if (this.props.faceUp){            
+            return (
+                <ul>
+                    {this.props.active ? this.renderActiveCards() : this.renderInactiveCards()}
+                </ul>                                
+            );
+        }
+        else{
+            return (<span>{this.props.cards.length} cards</span>);
+        }
+    }
+
     render() {
         if (!this.props.cards){
             return (<span></span>);
         }
-        if (this.props.faceUp){
-            const cardDisplays = this.props.cards.map((card) => <li>{card.name}</li>);
-            const activeCardDisplays = this.props.cards.map((card) => <li><a href="#" onClick={this.handleCardClick}>{card.name}</a></li>);
-
-            return (
-                <div>
+        
+        return (
+            <div>
                 <h2>{this.props.name}</h2>
-                <ul>
-                    {this.props.active ? activeCardDisplays : cardDisplays}
-                </ul>                
-                </div>
-            );
-        }
-        else{
-            return (<div><h2>{this.props.name}</h2><span>{this.props.cards.length} cards</span></div>);
-        }
+                {this.renderFaceUpDown()}
+            </div>
+        );
     }
 }
 
