@@ -6,9 +6,12 @@ class SplashScreen extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(){
-        console.log("clicked");
-        fetch("http://localhost:8080/start")
+    handleClick(event){
+        event.preventDefault();
+        const splashForm = event.target.closest("form");
+        const playerName = splashForm.querySelector("#playerName").value;
+
+        fetch("http://localhost:8080/start?playerName=" + playerName)
         .then(res => res.json())
         .then((result) => {
             this.props.onGameStart(result);
@@ -17,7 +20,11 @@ class SplashScreen extends Component {
 
     render() {
         return (
-            <button onClick={this.handleClick}>Start Game</button>
+            <form>
+                <input type="text" id="playerName"></input>
+                <button onClick={this.handleClick}>Start Game</button>
+            </form>
+            
         );
     }
 }

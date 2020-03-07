@@ -15,6 +15,10 @@ class GameContainer extends Component {
         this.handleAction = this.handleAction.bind(this);
     }
 
+    getPlayerName() {
+        return this.props.gameState.name;
+    }
+
     componentDidMount() {
         fetch("http://localhost:8080/bank")
         .then(res => res.json())
@@ -24,7 +28,7 @@ class GameContainer extends Component {
     }
 
     handlePlayCard(cardName){
-        fetch("http://localhost:8080/play?card=" + cardName)
+        fetch("http://localhost:8080/play?card=" + cardName + "&playerName=" + this.getPlayerName())
         .then(res => res.json())
         .then((result) => {
             this.props.onGameUpdate(result);
@@ -32,7 +36,7 @@ class GameContainer extends Component {
     }
 
     handleBuyCard(cardName){
-        fetch("http://localhost:8080/buy?card=" + cardName)
+        fetch("http://localhost:8080/buy?card=" + cardName + "&playerName=" + this.getPlayerName())
         .then(res => res.json())
         .then((result) => {
             this.props.onGameUpdate(result);
@@ -41,7 +45,7 @@ class GameContainer extends Component {
 
     handleCleanup(e){
         e.preventDefault();
-        fetch("http://localhost:8080/cleanup")
+        fetch("http://localhost:8080/cleanup?playerName=" + this.getPlayerName())
         .then(res => res.json())
         .then((result) => {
             this.props.onGameUpdate(result);
@@ -49,8 +53,8 @@ class GameContainer extends Component {
     }
 
     handleAction(optionNames){
-        let url = "http://localhost:8080/action";
-        optionNames.map((name, index) => url += (index == 0 ? "?" : "&") + "options=" + name);
+        let url = "http://localhost:8080/action?playerName=" + this.getPlayerName();
+        optionNames.map((name, index) => url += "&" + "options=" + name);
 
         fetch(url)
         .then(res => res.json())
@@ -67,6 +71,7 @@ class GameContainer extends Component {
         if (this.props.visible && gameState){
             return (        
             <div>
+                <h2>{this.getPlayerName()}</h2>
                 <CardSet cards={bank} faceUp={true} active={gameState.hasBuys && gameState.currentChoice == null} name="Bank" onCardClick={this.handleBuyCard} />
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" /></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.hand} faceUp={true} active={gameState.currentChoice == null} name="Hand" onCardClick={this.handlePlayCard}/></div>
