@@ -29,45 +29,76 @@ class GameContainer extends Component {
 
     handlePlayCard(cardName){
         fetch("http://localhost:8080/play?card=" + cardName + "&playerName=" + this.getPlayerName())
-        .then(res => res.json())
+        .then(res => {
+            if (res.ok) { return res.json(); }
+            else { res.text().then(text => {
+                console.error(text);
+              });               
+            }
+        })
         .then((result) => {
-            this.props.onGameUpdate(result);
+            if (result){
+                this.props.onGameUpdate(result);
+            }
         });
     }
 
     handleBuyCard(cardName){
         fetch("http://localhost:8080/buy?card=" + cardName + "&playerName=" + this.getPlayerName())
-        .then(res => res.json())
+        .then(res => {
+            if (res.ok) { return res.json(); }
+            else { res.text().then(text => {
+                console.error(text);
+              });               
+            }
+        })
         .then((result) => {
-            this.props.onGameUpdate(result);
+            if (result){
+                this.props.onGameUpdate(result);
+            }            
         });
     }
 
     handleCleanup(e){
         e.preventDefault();
         fetch("http://localhost:8080/cleanup?playerName=" + this.getPlayerName())
-        .then(res => res.json())
+        .then(res => {
+            if (res.ok) { return res.json(); }
+            else { res.text().then(text => {
+                console.error(text);
+              });               
+            }
+        })
         .then((result) => {
-            this.props.onGameUpdate(result);
+            if (result){
+                this.props.onGameUpdate(result);
+            }
         });
     }
 
     handleAction(optionNames){
         let url = "http://localhost:8080/action?playerName=" + this.getPlayerName();
-        optionNames.map((name, index) => url += "&" + "options=" + name);
+        optionNames.map((name, index) => url += "&options=" + name);
 
         fetch(url)
-        .then(res => res.json())
+        .then(res => {
+            if (res.ok) { return res.json(); }
+            else { res.text().then(text => {
+                console.error(text);
+              });               
+            }
+        })
         .then((result) => {
-            this.props.onGameUpdate(result);
+            if (result){
+                this.props.onGameUpdate(result);
+            }
         });
     }
 
     render() {
         const gameState = this.props.gameState;
         const bank = this.state.bank;
-        
-        
+
         if (this.props.visible && gameState){
             return (        
             <div>
