@@ -13,6 +13,7 @@ class GameContainer extends Component {
         this.handleBuyCard = this.handleBuyCard.bind(this);
         this.handleCleanup = this.handleCleanup.bind(this);
         this.handleAction = this.handleAction.bind(this);
+        this.handActiveTest = this.handActiveTest.bind(this);
     }
 
     getPlayerName() {
@@ -95,6 +96,11 @@ class GameContainer extends Component {
         });
     }
 
+    handActiveTest(card) {
+        return this.props.gameState.currentChoice == null &&
+            (this.props.gameState.hasActions || card.type != "ACTION");
+    }
+
     render() {
         const gameState = this.props.gameState;
         const bank = this.state.bank;
@@ -105,7 +111,7 @@ class GameContainer extends Component {
                 <h2>{this.getPlayerName()}</h2>
                 <CardSet cards={bank} faceUp={true} active={gameState.hasBuys && gameState.currentChoice == null} name="Bank" onCardClick={this.handleBuyCard} />
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" /></div>
-                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.hand} faceUp={true} active={gameState.currentChoice == null} name="Hand" onCardClick={this.handlePlayCard}/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.hand} faceUp={true} active={true} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.bought} faceUp={true} active={false} name="Bought"/></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/></div>
