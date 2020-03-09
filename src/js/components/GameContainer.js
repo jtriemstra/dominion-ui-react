@@ -13,6 +13,7 @@ class GameContainer extends Component {
         this.handleBuyCard = this.handleBuyCard.bind(this);
         this.handleCleanup = this.handleCleanup.bind(this);
         this.handleAction = this.handleAction.bind(this);
+        this.handleRefresh = this.handleRefresh.bind(this);
         this.handActiveTest = this.handActiveTest.bind(this);
     }
 
@@ -96,6 +97,23 @@ class GameContainer extends Component {
         });
     }
 
+    handleRefresh(e) {
+        e.preventDefault();
+        fetch("http://localhost:8080/refresh?playerName=" + this.getPlayerName())
+        .then(res => {
+            if (res.ok) { return res.json(); }
+            else { res.text().then(text => {
+                console.error(text);
+              });               
+            }
+        })
+        .then((result) => {
+            if (result){
+                this.props.onGameUpdate(result);
+            }
+        });
+    }
+
     handActiveTest(card) {
         return this.props.gameState.currentChoice == null &&
             (this.props.gameState.hasActions || card.type != "ACTION");
@@ -109,9 +127,10 @@ class GameContainer extends Component {
             return (        
             <div>
                 <h2>{this.getPlayerName()}</h2>
-                <CardSet cards={bank} faceUp={true} active={gameState.hasBuys && gameState.currentChoice == null} name="Bank" onCardClick={this.handleBuyCard} />
+                <button onClick={this.handleRefresh}>Refresh</button>
+                <CardSet cards={bank} faceUp={true} active={gameState.hasBuys && gameState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" onCardClick={this.handleBuyCard} />
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" /></div>
-                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.hand} faceUp={true} active={true} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.hand} faceUp={true} active={gameState.isCurrentPlayer} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.bought} faceUp={true} active={false} name="Bought"/></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/></div>
