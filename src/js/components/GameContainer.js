@@ -27,6 +27,12 @@ class GameContainer extends Component {
         .then((result) => {
             this.setState({bank: result});
         });
+
+        setInterval(() => {
+            if (!this.props.gameState.isCurrentPlayer){
+                this.handleRefresh();
+            }
+        }, 5000);
     }
 
     handlePlayCard(cardName){
@@ -98,7 +104,7 @@ class GameContainer extends Component {
     }
 
     handleRefresh(e) {
-        e.preventDefault();
+        if (e) e.preventDefault();
         fetch("http://localhost:8080/refresh?playerName=" + this.getPlayerName())
         .then(res => {
             if (res.ok) { return res.json(); }
