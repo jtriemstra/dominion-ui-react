@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import CardSet from "./CardSet"
 import ActionChoices from "./ActionChoices"
+import PlayerList from "./PlayerList"
 
 class GameContainer extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class GameContainer extends Component {
     }
 
     getPlayerName() {
-        return this.props.gameState.name;
+        return this.props.gameState.thisPlayer.name;
     }
 
     componentDidMount() {
@@ -29,7 +30,7 @@ class GameContainer extends Component {
         });
 
         setInterval(() => {
-            if (!this.props.gameState.isCurrentPlayer){
+            if (this.props.gameState && !this.props.gameState.isCurrentPlayer){
                 this.handleRefresh();
             }
         }, 5000);
@@ -121,27 +122,32 @@ class GameContainer extends Component {
     }
 
     handActiveTest(card) {
-        return this.props.gameState.currentChoice == null &&
-            (this.props.gameState.hasActions || card.type != "ACTION");
+        return this.props.gameState.thisPlayer.currentChoice == null &&
+            (this.props.gameState.thisPlayer.hasActions || card.type != "ACTION");
     }
 
     render() {
+        if (!this.props.gameState) {
+            return null;
+        }
+        
         const gameState = this.props.gameState;
+        const playerState = gameState.thisPlayer;
         const bank = this.state.bank;
 
         if (this.props.visible && gameState){
             return (        
             <div>
-                <h2>{this.getPlayerName()}</h2>
+                <PlayerList currentPlayerIndex={gameState.currentPlayerIndex} playerNames={gameState.playerNames} />
                 <button onClick={this.handleRefresh}>Refresh</button>
-                <CardSet cards={bank} faceUp={true} active={gameState.hasBuys && gameState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" onCardClick={this.handleBuyCard} />
-                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.deck} faceUp={false} active={false} name="Deck" /></div>
-                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.hand} faceUp={true} active={gameState.isCurrentPlayer} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/></div>
-                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.played} faceUp={true} active={false} name="Played"/></div>
-                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.bought} faceUp={true} active={false} name="Bought"/></div>
-                <div style={{ width:'20%', float:'left' }}><CardSet cards={gameState.discard} faceUp={false} active={false} name="Discard"/></div>
+                <CardSet cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" onCardClick={this.handleBuyCard} />
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.deck} faceUp={false} active={false} name="Deck" /></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.played} faceUp={true} active={false} name="Played"/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.bought} faceUp={true} active={false} name="Bought"/></div>
+                <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.discard} faceUp={false} active={false} name="Discard"/></div>
                 <div style={{ clear:'both'}} />
-                <ActionChoices currentChoice={gameState.currentChoice} onOptionClick={this.handleAction}/>
+                <ActionChoices currentChoice={playerState.currentChoice} onOptionClick={this.handleAction}/>
                 <button onClick={this.handleCleanup}>Clean Up</button>
             </div>
             );
