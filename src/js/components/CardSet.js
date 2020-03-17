@@ -19,9 +19,13 @@ class CardSet extends Component {
         return cardList;
     }
 
+    getCardImageByName(cardName){
+        return "images/200px-" + cardName.replace(" ", "_") + ".jpg"
+    }
+
     renderInactiveCards(){
         const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
-        return normalizedCards.map((card) => <li>{card.name}</li>);
+        return normalizedCards.map((card) => <li><img src={this.getCardImageByName(card.name)} /></li>);
     }
 
     renderActiveCards(){
