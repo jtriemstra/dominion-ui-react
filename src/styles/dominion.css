@@ -1,0 +1,11 @@
+.card-set ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 0px;
+}
+.card-set li {
+    list-style-type: none;
+
+}

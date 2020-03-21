@@ -27,7 +27,7 @@ module.exports = {
       filename: "./index.html"
     })
     ,
-    new CopyWebpackPlugin([ { from: 'src/images', to: 'images' } ])
+    new CopyWebpackPlugin([ { from: 'src/images', to: 'images' }, { from: 'src/styles', to: 'styles'} ])
   ],
   devServer: {
     port:8001

@@ -18,6 +18,8 @@ class DominionUi extends Component {
 
   handleNewState(newState){
     this.setState({gameState: newState});
+
+    document.cookie = "playerName=" + newState.thisPlayer.name;
   }
 
   render() {
@@ -27,7 +29,7 @@ class DominionUi extends Component {
       <div>
         <Header />
         <SplashScreen onGameStart={this.handleNewState} />
-        <GameContainer visible="false" gameState={gameState} onGameUpdate={this.handleNewState} />
+        <GameContainer gameState={gameState} onGameUpdate={this.handleNewState} />
       </div>
     );
   }

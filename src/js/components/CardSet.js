@@ -10,7 +10,11 @@ class CardSet extends Component {
 
     handleCardClick(e){
         e.preventDefault();
-        this.props.onCardClick(e.target.innerText);
+        
+        if (e.target.parentElement.dataset){
+            this.props.onCardClick(e.target.parentElement.dataset.cardname);    
+        }
+        
     }
 
     transformBank(bankObject) {
@@ -25,7 +29,7 @@ class CardSet extends Component {
 
     renderInactiveCards(){
         const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
-        return normalizedCards.map((card) => <li><img src={this.getCardImageByName(card.name)} /></li>);
+        return normalizedCards.map((card) => <li><img width="80px" src={this.getCardImageByName(card.name)} /></li>);
     }
 
     renderActiveCards(){
@@ -34,19 +38,18 @@ class CardSet extends Component {
         if (this.props.activeTest){
             return normalizedCards.map((card) => {
                 if (this.props.activeTest(card)){
-                    return <li><a href="#" onClick={this.handleCardClick}>{card.name}</a> {this.props.name === "Bank" ? "(" + card.cost + ")" : ""}</li>
+                    return <li><a href="#" data-cardname={card.name} onClick={this.handleCardClick}><img width="80px" src={this.getCardImageByName(card.name)} /></a></li>
                 }
                 else {
-                    return <li>{card.name} {this.props.name === "Bank" ? "(" + card.cost + ")" : ""}</li>
+                    return <li><img width="80px" src={this.getCardImageByName(card.name)} /></li>
                 }
             }
                 
             );    
         }
 
-        //TODO: keying off the name of 'Bank' is flimsy, but ultimately would like the UI to be an image, not text anyway so a better solution may not matter
         return normalizedCards.map((card) => 
-            <li><a href="#" onClick={this.handleCardClick}>{card.name}</a> {this.props.name === "Bank" ? "(" + card.cost + ")" : ""}</li>
+            <li><a href="#" data-cardname={card.name} onClick={this.handleCardClick}><img width="80px" src={this.getCardImageByName(card.name)} /></a></li>
         );
     }
 
@@ -69,7 +72,7 @@ class CardSet extends Component {
         }
         
         return (
-            <div>
+            <div className='card-set'>
                 <h2>{this.props.name}</h2>
                 {this.renderFaceUpDown()}
             </div>

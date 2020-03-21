@@ -19,7 +19,14 @@ class GameContainer extends Component {
     }
 
     getPlayerName() {
-        return this.props.gameState.thisPlayer.name;
+        if (document.cookie) {
+            const cookies = document.cookie.split(";");
+            for (var i=0; i<cookies.length; i++){
+                if (cookies[i].startsWith("playerName=")){
+                    return cookies[i].substring(11);                    
+                }
+            }
+        }
     }
 
     componentDidMount() {
@@ -28,6 +35,11 @@ class GameContainer extends Component {
         .then((result) => {
             this.setState({bank: result});
         });
+
+        if(this.getPlayerName()){
+            this.handleRefresh();
+        }
+        
 
         setInterval(() => {
             if (this.props.gameState && !this.props.gameState.isCurrentPlayer){
@@ -135,12 +147,12 @@ class GameContainer extends Component {
         const playerState = gameState.thisPlayer;
         const bank = this.state.bank;
 
-        if (this.props.visible && gameState){
+        if (gameState){
             return (        
             <div>
                 <PlayerList currentPlayerIndex={gameState.currentPlayerIndex} playerNames={gameState.playerNames} />
                 <button onClick={this.handleRefresh}>Refresh</button>
-                <CardSet cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" onCardClick={this.handleBuyCard} />
+                <div style={{clear:"both"}}><CardSet cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" onCardClick={this.handleBuyCard} /></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.deck} faceUp={false} active={false} name="Deck" /></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/></div>
                 <div style={{ width:'20%', float:'left' }}><CardSet cards={playerState.played} faceUp={true} active={false} name="Played"/></div>

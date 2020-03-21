@@ -10,7 +10,11 @@ class SplashScreen extends Component {
         event.preventDefault();
         const splashForm = event.target.closest("form");
         const playerName = splashForm.querySelector("#playerName").value;
+        
+        this.loadGame(playerName);
+    }
 
+    loadGame(playerName) {
         fetch("http://localhost:8080/start?playerName=" + playerName)
         .then(res => res.json())
         .then((result) => {
