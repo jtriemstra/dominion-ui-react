@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-class CardSet extends Component {
-    constructor(props) { 
+class Bank extends Component {
+    constructor(props) {
         super(props);
         
         this.handleCardClick = this.handleCardClick.bind(this);
@@ -27,9 +27,13 @@ class CardSet extends Component {
         return "images/200px-" + cardName.replace(" ", "_") + ".jpg"
     }
 
+    getOneCardQuantity(cardName) {
+        return this.props.cards[cardName].quantity;
+    }
+
     renderInactiveCards(){
         const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
-        return normalizedCards.map((card) => <li><img width="160px" src={this.getCardImageByName(card.name)} /></li>);
+        return normalizedCards.map((card) => <li><img width="160px" src={this.getCardImageByName(card.name)} /><span className="bank-quantity">{this.getOneCardQuantity(card.name)} left</span></li>);
     }
 
     renderActiveCards(){
@@ -38,10 +42,10 @@ class CardSet extends Component {
         if (this.props.activeTest){
             return normalizedCards.map((card) => {
                 if (this.props.activeTest(card)){
-                    return <li className="card-active"><a href="#" data-cardname={card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(card.name)} /></a></li>
+                    return <li className="card-active"><a href="#" data-cardname={card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(card.name)} /></a><span className="bank-quantity">{this.getOneCardQuantity(card.name)} left</span></li>
                 }
                 else {
-                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(card.name)} /></li>
+                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(card.name)} /><span className="bank-quantity">{this.getOneCardQuantity(card.name)} left</span></li>
                 }
             }
                 
@@ -69,7 +73,7 @@ class CardSet extends Component {
         }
 
         return (
-            <div className={"card-set " + this.props.className}>
+            <div className='card-set'>
                 <h2>{this.props.name}</h2>
                 {cardList}
             </div>
@@ -77,4 +81,4 @@ class CardSet extends Component {
     }
 }
 
-export default CardSet;
+export default Bank;

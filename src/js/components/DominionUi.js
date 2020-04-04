@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Header from "./Header";
 import SplashScreen from './SplashScreen';
+import EndScreen from './EndScreen';
 import GameContainer from './GameContainer';
 
 
@@ -25,11 +26,22 @@ class DominionUi extends Component {
   render() {
     const gameState = this.state.gameState;
 
+    let splashScreen = null;
+    if (!gameState){
+      splashScreen = <SplashScreen onGameStart={this.handleNewState} />;
+    }
+
+    let endScreen = null;
+    if (gameState && gameState.isGameOver) {
+      endScreen = <EndScreen gameState={gameState} />;
+    }
+
     return (        
       <div>
         <Header />
-        <SplashScreen onGameStart={this.handleNewState} />
+        {splashScreen}
         <GameContainer gameState={gameState} onGameUpdate={this.handleNewState} />
+        {endScreen}
       </div>
     );
   }

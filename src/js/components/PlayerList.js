@@ -6,9 +6,12 @@ class PlayerList extends Component {
         const currentPlayerIndex = this.props.currentPlayerIndex;
 
         return (
-            <ul>
-                {playerNames.map((name, index) => <li><span style={{ fontWeight:index===currentPlayerIndex ? 'bold' : '' }}>{name}</span></li>)}
-            </ul>
+            <div className="player-list">
+                <h2>Players: </h2>
+                <ul>
+                    {playerNames.map((name, index) => <li className={index===currentPlayerIndex ? 'active' : ''}>{name}</li>)}
+                </ul>
+            </div>
         );
     }
 }

@@ -1,11 +1,99 @@
+.card-set{
+    width:100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin:5px;
+    padding:5px;
+}
+
+.card-set-active, .card-set-inactive {
+    overflow-x:auto;
+    white-space: nowrap;
+}
 .card-set ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 100%;
     padding: 0px;
+}
+.card-set h2{
+    margin-top:0px;
 }
 .card-set li {
     list-style-type: none;
+    width:160px;
+    display:inline-block;
+    padding:10px;
+}
+.card-set-inactive li  {
+    opacity: .5;
+}
+.card-set img {
+    border-radius:5px;
+}
+.card-set-container1 {
+    display:grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap:1rem;
+}
+.card-set-container2 {
+    display:grid; 
+    grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+    grid-gap:1rem;
+}
 
+.card-inactive {
+    opacity: .5;
+}
+
+.bank-quantity {
+    display:block;
+    text-align: center;
+}
+
+.player-list, .player-list h2, .player-list ul, .player-list li {
+    display:inline;        
+}
+
+.player-list ul {
+    padding: 0px;
+}
+
+.player-list li {
+    list-style-type: none;
+    padding: 15px;
+}
+
+.player-list li.active {
+    font-weight:bold;
+    text-decoration: underline;
+}
+
+.turn-dashboard {
+    margin-top:25px;   
+    display:grid; 
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    
+}
+.turn-dashboard h3 {
+    display:inline;
+    font-weight: normal;
+}
+.turn-dashboard p {
+    display:inline;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right:25px;
+}
+
+.actions-background, .end-screen {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,.25);
+}
+.actions-dialog, .end-screen-content {
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    width:25%;
 }

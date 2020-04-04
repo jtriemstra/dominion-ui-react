@@ -30,15 +30,17 @@ class ActionChoices extends Component {
         );
 
         return (
-            <div>
-                <h2>Action</h2>
-                <p>{this.props.currentChoice.prompt}</p>
-                <form>
-                    <ul>
-                        {choices}
-                    </ul>
-                    <button onClick={this.handleChoice}>Submit</button>
-                </form>
+            <div className="actions-background">
+                <div className="actions-dialog">
+                    <h2>Action</h2>
+                    <p>{this.props.currentChoice.prompt}</p>
+                    <form>
+                        <ul>
+                            {choices}
+                        </ul>
+                        <button onClick={this.handleChoice}>Submit</button>
+                    </form>
+                </div>
             </div>
         );
     }

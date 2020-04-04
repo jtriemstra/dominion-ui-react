@@ -1,21 +1,36 @@
 import React, { Component } from "react";
+import Utility from "../Utility"
 
 class SplashScreen extends Component {
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
+        this.handleStart = this.handleStart.bind(this);
+        this.handleJoin = this.handleJoin.bind(this);
+        this.handleStartRandom = this.handleStartRandom.bind(this);
     }
 
-    handleClick(event){
+    handleStart(event){
         event.preventDefault();
-        const splashForm = event.target.closest("form");
-        const playerName = splashForm.querySelector("#playerName").value;
-        
-        this.loadGame(playerName);
+        this.loadGame(this.getName(), "start");
+    }
+    
+    handleStartRandom(event){
+        event.preventDefault();
+        this.loadGame(this.getName(), "start", true);
     }
 
-    loadGame(playerName) {
-        fetch("http://localhost:8080/start?playerName=" + playerName)
+    handleJoin(event) {
+        event.preventDefault();
+        this.loadGame(this.getName(), "join");
+    }
+
+    getName(){
+        const splashForm = event.target.closest("form");
+        return splashForm.querySelector("#playerName").value;
+    }
+    
+    loadGame(playerName, action, randomCards) {
+        fetch(Utility.apiServer() + "/" + action + "?playerName=" + playerName + (randomCards ? "&randomCards=true" : ""))
         .then(res => res.json())
         .then((result) => {
             this.props.onGameStart(result);
@@ -26,7 +41,9 @@ class SplashScreen extends Component {
         return (
             <form>
                 <input type="text" id="playerName"></input>
-                <button onClick={this.handleClick}>Start Game</button>
+                <button onClick={this.handleStart}>Start Game With Basic Deck</button>
+                <button onClick={this.handleStartRandom}>Start Game With Random Deck</button>
+                <button onClick={this.handleJoin}>Join Game</button>
             </form>
             
         );
