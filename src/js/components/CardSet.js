@@ -24,7 +24,7 @@ class CardSet extends Component {
     }
 
     getCardImageByName(cardName){
-        return "images/200px-" + cardName.replace(" ", "_") + ".jpg"
+        return "images/200px-" + cardName.replace(/ /g, "_") + ".jpg"
     }
 
     renderInactiveCards(){
