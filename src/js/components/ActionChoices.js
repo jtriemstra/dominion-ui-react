@@ -21,13 +21,44 @@ class ActionChoices extends Component {
         this.props.onOptionClick(selectedOptions);
     }
 
+    getChoiceType(){
+        if (this.props.currentChoice.minOptions === 1 && this.props.currentChoice.maxOptions === 1){
+            return "radio";
+        }
+        else {
+            return "checkbox";
+        }
+    }
+
+    getCardImageByName(cardName){
+        return "images/200px-" + cardName.replace(/ /g, "_") + ".jpg"
+    }
+
+    getChoices(){
+        if (this.props.currentChoice.options[0] === "Yes" || this.props.currentChoice.options[0] === "2 Cards; 1 Action"){
+            const choices = this.props.currentChoice.options.map((choice) => 
+                <li><label>{choice}<input type={this.getChoiceType()} value={choice} name="options" /></label></li>
+            );
+
+            return <ul>{choices}</ul>;
+        }
+        else {
+            const choices = this.props.currentChoice.options.map((choice) => 
+                    <li class='card-active'><label><img src={this.getCardImageByName(choice)} width="160px"/><input type={this.getChoiceType()} value={choice} name="options" /></label></li>
+            );
+
+            return <div class='card-set'><ul class='card-set-active'>{choices}</ul></div>;
+        }
+    }
+
+    
+
     render() {
         if (!this.props.currentChoice){
             return (<div></div>);
         }
-        const choices = this.props.currentChoice.options.map((choice) => 
-            <li><label>{choice}<input type="checkbox" value={choice} name="options" /></label></li>
-        );
+
+        const choices = this.getChoices();
 
         return (
             <div className="actions-background">
@@ -35,9 +66,7 @@ class ActionChoices extends Component {
                     <h2>Action</h2>
                     <p>{this.props.currentChoice.prompt}</p>
                     <form>
-                        <ul>
-                            {choices}
-                        </ul>
+                        {choices}
                         <button onClick={this.handleChoice}>Submit</button>
                     </form>
                 </div>

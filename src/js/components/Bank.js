@@ -19,7 +19,10 @@ class Bank extends Component {
 
     transformBank(bankObject) {
         let cardList = [];
-        Object.keys(bankObject).map(cardName => cardList.push(bankObject[cardName].card));
+        for (var i=0; i<bankObject.length; i++){
+            cardList.push(bankObject[i].card);
+        }
+        //Object.keys(bankObject).map(cardName => cardList.push(bankObject[cardName].card));
         return cardList;
     }
 
@@ -28,16 +31,20 @@ class Bank extends Component {
     }
 
     getOneCardQuantity(cardName) {
-        return this.props.cards[cardName].quantity;
+        for (var i=0; i<this.props.cards.length; i++){
+            if (this.props.cards[i].card.name === cardName){
+                return this.props.cards[i].quantity;
+            }
+        }
     }
 
     renderInactiveCards(){
-        const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
+        const normalizedCards = this.transformBank(this.props.cards);
         return normalizedCards.map((card) => <li><img width="160px" src={this.getCardImageByName(card.name)} /><span className="bank-quantity">{this.getOneCardQuantity(card.name)} left</span></li>);
     }
 
     renderActiveCards(){
-        const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
+        const normalizedCards = this.transformBank(this.props.cards);
 
         if (this.props.activeTest){
             return normalizedCards.map((card) => {

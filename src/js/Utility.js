@@ -1,7 +1,13 @@
 class Utility {
     static apiServer() {
-        return "https://jtriemstra-dominion-api.herokuapp.com";
-        //return "http://localhost:8080";
+        console.log(process.env.APP_ENV);
+        if (process.env.APP_ENV === 'prod'){
+            return "https://jtriemstra-dominion-api.herokuapp.com";
+        }
+        else {
+            return "http://localhost:8080";
+        }
+        
     }
 }
 

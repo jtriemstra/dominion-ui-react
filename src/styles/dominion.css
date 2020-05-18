@@ -100,11 +100,26 @@
     top: 50%;
     transform: translateY(-50%);
 }
+
+@media only screen and (max-width: 600px) {
+    .actions-dialog, .end-screen-content {
+        left:5%;
+        width:90%;    
+    }
+}
+
 .actions-dialog ul {
     padding: 0px;
 }
 .actions-dialog li  {
     padding: 10px;;
+}
+.actions-dialog input[type=checkbox], .actions-dialog input[type=radio]{
+    transform: scale(2);
+    margin-left:20px;
+}
+.actions-dialog .card-set input[type=checkbox], .actions-dialog .card-set input[type=radio]{
+    margin-left:-20px;
 }
 
 html, body, .game-container{
@@ -113,8 +128,4 @@ html, body, .game-container{
 }
 button {
     padding:15px;
-}
-input[type=checkbox]{
-    transform: scale(2);
-    margin-left:20px;
 }

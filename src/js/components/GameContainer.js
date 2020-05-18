@@ -35,7 +35,9 @@ class GameContainer extends Component {
     }
 
     componentDidMount() {
-        this.loadBank();
+        if (this.props.gameState){
+            this.loadBank();
+        }
 
         if(this.getPlayerName()){
             this.handleRefresh();
@@ -49,6 +51,7 @@ class GameContainer extends Component {
     }
 
     loadBank() {
+        console.log("loading bank");
         var myHeaders = new Headers();
         myHeaders.append('pragma', 'no-cache');
         myHeaders.append('cache-control', 'no-cache');
@@ -64,6 +67,7 @@ class GameContainer extends Component {
         .then(res => res.json())
         .then((result) => {
             this.setState({bank: result});
+            console.log(result);
         });
 
     }
@@ -80,6 +84,8 @@ class GameContainer extends Component {
         .then((result) => {
             if (result){
                 this.props.onGameUpdate(result);
+                //TODO: only do this if there's a trigger for it
+                this.loadBank();
             }
         });
     }

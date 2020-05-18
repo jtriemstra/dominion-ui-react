@@ -17,8 +17,10 @@ class SplashScreen extends Component {
                     "Cellar,Chapel,Feast,Gardens,Laboratory,Thief,Village,Witch,Woodcutter,Workshop",
                     "Bureaucrat,Cellar,Festival,Library,Market,Remodel,Smithy,Throne Room,Village,Woodcutter",
                     "Cache,Crossroads,Develop,Haggler,Jack of All Trades,Margrave,Nomad Camp,Oasis,Spice Merchant,Stables",
-                    "Trader,Crossroads,Embassy,Inn,Jack of All Trades,Mandarin,Nomad Camp,Oasis,Oracle,Tunnel",
-                    "Cellar,Library,Moneylender,Throne Room,Workshop,Highway,Inn,Margrave,Noble Brigand,Oasis"];
+                    "Cartographer,Crossroads,Embassy,Inn,Jack of All Trades,Mandarin,Nomad Camp,Oasis,Oracle,Tunnel",
+                    "Cellar,Library,Moneylender,Throne Room,Workshop,Highway,Inn,Margrave,Noble Brigand,Oasis",
+                    "Border Village,Cartographer,Develop,Duchess,Farmland,Ill-Gotten Gains,Noble Brigand,Silk Road,Stables,Trader",
+                    "Border Village,Cache,Duchess,Fools Gold,Haggler,Highway,Nomad Camp,Scheme,Spice Merchant,Trader"];
         const setIndex = event.target.dataset.setindex;
         this.loadGame(this.getName(), "start", false, sets[setIndex]);
     }
@@ -70,6 +72,8 @@ class SplashScreen extends Component {
                 <button onClick={this.handleStart} data-setindex="5">Start Game With Hinterlands Intro</button><br/>
                 <button onClick={this.handleStart} data-setindex="6">Start Game With Hinterlands Gambits</button><br/>
                 <button onClick={this.handleStart} data-setindex="7">Start Game With Hinterlands Highway Robbery</button><br/>
+                <button onClick={this.handleStart} data-setindex="8">Start Game With Hinterlands Fair Trades</button><br/>
+                <button onClick={this.handleStart} data-setindex="9">Start Game With Hinterlands Bargains</button><br/>
                 <button onClick={this.handleStartRandom}>Start Game With Random Deck</button><br/>
                 <button onClick={this.handleJoin}>Join Game</button>
             </form>
