@@ -47,12 +47,12 @@ class Bank extends Component {
         const normalizedCards = this.transformBank(this.props.cards);
 
         if (this.props.activeTest){
-            return normalizedCards.map((card) => {
-                if (this.props.activeTest(card)){
-                    return <li className="card-active"><a href="#" data-cardname={card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(card.name)} /></a><span className="bank-quantity">{this.getOneCardQuantity(card.name)} left</span></li>
+            return this.props.cards.map((bankcard) => {
+                if (this.props.activeTest(bankcard.card) && bankcard.quantity > 0){
+                    return <li className="card-active"><a href="#" data-cardname={bankcard.card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(bankcard.card.name)} /></a><span className="bank-quantity">{this.getOneCardQuantity(bankcard.card.name)} left</span></li>
                 }
                 else {
-                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(card.name)} /><span className="bank-quantity">{this.getOneCardQuantity(card.name)} left</span></li>
+                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(bankcard.card.name)} /><span className="bank-quantity">{this.getOneCardQuantity(bankcard.card.name)} left</span></li>
                 }
             }
                 
