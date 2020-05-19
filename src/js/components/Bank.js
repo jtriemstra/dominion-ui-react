@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 class Bank extends Component {
+    //TODO: clean up duplication between Bank and CardSet
     constructor(props) {
         super(props);
         
