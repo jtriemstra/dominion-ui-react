@@ -65,7 +65,7 @@ class CardSet extends Component {
             </ul>                                
         }
         else{
-            cardList = <span>{this.props.cards.length} cards</span>
+            cardList = <span class="card-set-facedown">{this.props.cards.length} cards</span>
         }
 
         return (

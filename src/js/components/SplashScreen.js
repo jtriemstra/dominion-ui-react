@@ -4,9 +4,22 @@ import Utility from "../Utility"
 class SplashScreen extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {activeGame:false};
+
         this.handleStart = this.handleStart.bind(this);
         this.handleJoin = this.handleJoin.bind(this);
+        this.handleEnd = this.handleEnd.bind(this);
         this.handleStartRandom = this.handleStartRandom.bind(this);
+    }
+
+    componentDidMount(){
+        this.checkGameStatus();
+
+        setInterval(() => {
+                this.checkGameStatus();
+            
+        }, 5000);
     }
 
     handleStart(event){
@@ -35,6 +48,25 @@ class SplashScreen extends Component {
         this.loadGame(this.getName(), "join");
     }
 
+    handleEnd(e) {
+        if (e) e.preventDefault();
+
+        fetch(Utility.apiServer() + "/end")
+        .then(res => {
+            if (res.ok) { return true; }
+            else { res.text().then(text => {
+                console.error(text);
+              });               
+            }
+        })
+        .then((result) => {
+            if (result){
+                document.cookie = "playerName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                window.location.reload();
+            }
+        });
+    }
+
     getName(){
         const splashForm = event.target.closest("form");
         return splashForm.querySelector("#playerName").value;
@@ -60,22 +92,62 @@ class SplashScreen extends Component {
         });
     }
 
+    checkGameStatus(){
+        var myHeaders = new Headers();
+        myHeaders.append('pragma', 'no-cache');
+        myHeaders.append('cache-control', 'no-cache');
+
+        var myInit = {
+            method: 'GET',
+            headers: myHeaders,
+        };
+
+        var myRequest = new Request(Utility.apiServer() + "/activeGame");
+
+        fetch(myRequest, myInit)
+        .then(res => res.json())
+        .then((result) => {
+            console.log(result);
+            this.setState({activeGame: result.activeGame});
+        });
+    }
+
+    renderButtons(){
+        if (!this.state.activeGame){
+            console.log("no active");
+            return (
+                <div>
+                    <button onClick={this.handleStart} data-setindex="0">Start Game With Basic Deck</button><br/>
+                    <button onClick={this.handleStart} data-setindex="1">Start Game With Big Money</button><br/>
+                    <button onClick={this.handleStart} data-setindex="2">Start Game With Interaction</button><br/>
+                    <button onClick={this.handleStart} data-setindex="3">Start Game With Size Distortion</button><br/>
+                    <button onClick={this.handleStart} data-setindex="4">Start Game With Village Square</button><br/>
+                    <button onClick={this.handleStart} data-setindex="5">Start Game With Hinterlands Intro</button><br/>
+                    <button onClick={this.handleStart} data-setindex="6">Start Game With Hinterlands Gambits</button><br/>
+                    <button onClick={this.handleStart} data-setindex="7">Start Game With Hinterlands Highway Robbery</button><br/>
+                    <button onClick={this.handleStart} data-setindex="8">Start Game With Hinterlands Fair Trades</button><br/>
+                    <button onClick={this.handleStart} data-setindex="9">Start Game With Hinterlands Bargains</button><br/>
+                    <button onClick={this.handleStartRandom}>Start Game With Random Deck</button><br/>
+                </div>
+            );
+        }
+        else {
+            console.log("active");
+            return (
+                <div>
+                    <button onClick={this.handleJoin}>Join Game</button>
+                    <button onClick={this.handleEnd}>End Game</button>
+                </div>
+            );
+        }
+        
+    }
+
     render() {
         return (
             <form>
-                <input type="text" id="playerName"></input>
-                <button onClick={this.handleStart} data-setindex="0">Start Game With Basic Deck</button><br/>
-                <button onClick={this.handleStart} data-setindex="1">Start Game With Big Money</button><br/>
-                <button onClick={this.handleStart} data-setindex="2">Start Game With Interaction</button><br/>
-                <button onClick={this.handleStart} data-setindex="3">Start Game With Size Distortion</button><br/>
-                <button onClick={this.handleStart} data-setindex="4">Start Game With Village Square</button><br/>
-                <button onClick={this.handleStart} data-setindex="5">Start Game With Hinterlands Intro</button><br/>
-                <button onClick={this.handleStart} data-setindex="6">Start Game With Hinterlands Gambits</button><br/>
-                <button onClick={this.handleStart} data-setindex="7">Start Game With Hinterlands Highway Robbery</button><br/>
-                <button onClick={this.handleStart} data-setindex="8">Start Game With Hinterlands Fair Trades</button><br/>
-                <button onClick={this.handleStart} data-setindex="9">Start Game With Hinterlands Bargains</button><br/>
-                <button onClick={this.handleStartRandom}>Start Game With Random Deck</button><br/>
-                <button onClick={this.handleJoin}>Join Game</button>
+                <label>Enter your name: <input type="text" id="playerName"></input></label>
+                {this.renderButtons()}                
             </form>
             
         );

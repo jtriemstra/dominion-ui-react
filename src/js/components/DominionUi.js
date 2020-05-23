@@ -68,6 +68,7 @@ class DominionUi extends Component {
 
     let splashScreen = null;
     if (!gameState){
+      console.log("no game state");
       splashScreen = <SplashScreen onGameStart={this.handleNewState} />;
     }
 
@@ -78,6 +79,7 @@ class DominionUi extends Component {
 
     let gameContainer = null;
     if (gameState){
+      console.log("game state");
       gameContainer = <GameContainer gameState={gameState} onGameUpdate={this.handleNewState} />;
     }
 

@@ -212,13 +212,13 @@ class GameContainer extends Component {
                 </div>
                 <TurnDashboard playerState={playerState} isCurrentPlayer={gameState.isCurrentPlayer} />
                 <div style={{clear:"both"}}><Bank cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} activeTest={this.bankActiveTest} name="Bank" onCardClick={this.handleBuyCard} /></div>
-                <div className="card-set-container2">
-                    <CardSet className="card-set-hand" cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer && playerState.currentChoice == null} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/>
-                    <CardSet className="card-set-played" cards={playerState.played} faceUp={true} active={false} name="Played"/>
-                    <CardSet className="card-set-bought" cards={playerState.bought} faceUp={true} active={false} name="Bought"/>
-                </div>
                 <div className="card-set-container1">
+                    <CardSet className="card-set-hand" cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer && playerState.currentChoice == null} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/>
+                    <CardSet className="card-set-played" cards={playerState.played} faceUp={true} active={false} name="Played"/>                    
+                </div>
+                <div className="card-set-container2">
                     <CardSet className="card-set-deck" cards={playerState.deck} faceUp={false} active={false} name="Deck" />
+                    <CardSet className="card-set-bought" cards={playerState.bought} faceUp={true} active={false} name="Bought"/>
                     <CardSet className="card-set-discard" cards={playerState.discard} faceUp={false} active={false} name="Discard"/>
                 </div>
                 

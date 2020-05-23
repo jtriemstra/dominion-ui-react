@@ -1,9 +1,7 @@
 .card-set{
     width:100%;
-    border: 1px solid black;
-    border-radius: 5px;
     margin:5px;
-    padding:5px;
+    background-color: rgba(255,255,255,.65);
 }
 
 .card-set-active, .card-set-inactive {
@@ -12,9 +10,11 @@
 }
 .card-set ul {
     padding: 0px;
+    margin: 0px;
 }
 .card-set h2{
-    margin-top:0px;
+    padding: 5px;
+    margin-top: 0px;
 }
 .card-set li {
     list-style-type: none;
@@ -38,7 +38,14 @@
     grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
     grid-gap:1rem;
 }
+.card-set-facedown {
+    padding: 10px;
+    display:block;
+}
 
+.card-active img {
+    box-shadow: 0px 7px 4px -2px gray;
+}
 .card-inactive {
     opacity: .5;
 }
@@ -93,10 +100,10 @@
 }
 .actions-dialog, .end-screen-content {
     position:absolute;
-    left:35%;
+    left:15%;
     padding: 20px;
     background-color: white;
-    width:30%;
+    width:70%;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -122,10 +129,31 @@
     margin-left:-20px;
 }
 
+.header{
+    width:100%;
+}
+.header img{
+    width:15%;
+    margin: 0 auto;
+    display: block;
+}
+
 html, body, .game-container{
     height:100%;
     position:relative;
 }
 button {
     padding:15px;
+}
+body {
+    background-image: url('../images/background2.jpg');
+}
+
+@font-face {
+    font-family: optimusPrinceps;
+    src: url(fonts/OptimusPrincepsSemiBold.ttf);
+  }
+
+h2, h3, h4, .player-list, .bank-quantity, .card-set-facedown{
+    font-family: optimusPrinceps;
 }
