@@ -17,12 +17,6 @@ class CardSet extends Component {
         
     }
 
-    transformBank(bankObject) {
-        let cardList = [];
-        Object.keys(bankObject).map(cardName => cardList.push(bankObject[cardName].card));
-        return cardList;
-    }
-
     getCardImageByName(cardName){
         return "images/200px-" + cardName.replace(/ /g, "_") + ".jpg"
     }
@@ -33,7 +27,7 @@ class CardSet extends Component {
     }
 
     renderActiveCards(){
-        const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
+        const normalizedCards = this.props.cards;
 
         if (this.props.activeTest){
             return normalizedCards.map((card) => {
