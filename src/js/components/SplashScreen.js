@@ -114,7 +114,6 @@ class SplashScreen extends Component {
 
     renderButtons(){
         if (!this.state.activeGame){
-            console.log("no active");
             return (
                 <div>
                     <button onClick={this.handleStart} data-setindex="0">Start Game With Basic Deck</button><br/>
@@ -132,7 +131,6 @@ class SplashScreen extends Component {
             );
         }
         else {
-            console.log("active");
             return (
                 <div>
                     <button onClick={this.handleJoin}>Join Game</button>
@@ -146,7 +144,7 @@ class SplashScreen extends Component {
     render() {
         return (
             <form>
-                <label>Enter your name: <input type="text" id="playerName"></input></label>
+                <label class="user-name">Enter your name: <input type="text" id="playerName"></input></label>
                 {this.renderButtons()}                
             </form>
             

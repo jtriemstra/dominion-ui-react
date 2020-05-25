@@ -2,6 +2,7 @@
     width:100%;
     margin:5px;
     background-color: rgba(255,255,255,.65);
+    box-shadow: inset 0 0 8px gray;
 }
 
 .card-set-active, .card-set-inactive {
@@ -154,6 +155,6 @@ body {
     src: url(fonts/OptimusPrincepsSemiBold.ttf);
   }
 
-h2, h3, h4, .player-list, .bank-quantity, .card-set-facedown{
+h2, h3, h4, .player-list, .bank-quantity, .card-set-facedown, .user-name{
     font-family: optimusPrinceps;
 }
