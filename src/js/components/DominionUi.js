@@ -83,6 +83,8 @@ class DominionUi extends Component {
       gameContainer = <GameContainer gameState={gameState} onGameUpdate={this.handleNewState} />;
     }
 
+    console.log(splashScreen);
+
     return (        
       <div>
         <Header />

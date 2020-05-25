@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import CardSet from './CardSet'
 
 class Bank extends CardSet {
+    //TODO: look into a way to pass a "renderer" to CardSet instead of inheriting?
     constructor(props) {
         super(props);
     }

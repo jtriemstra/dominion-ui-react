@@ -16,10 +16,14 @@ class SplashScreen extends Component {
     componentDidMount(){
         this.checkGameStatus();
 
-        setInterval(() => {
+        this.statusInterval = setInterval(() => {
                 this.checkGameStatus();
             
         }, 5000);
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.statusInterval);
     }
 
     handleStart(event){
