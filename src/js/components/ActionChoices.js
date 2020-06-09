@@ -31,7 +31,9 @@ class ActionChoices extends Component {
     }
 
     getCardImageByName(cardName){
-        return "images/200px-" + cardName.replace(/ /g, "_") + ".jpg"
+        //TODO: more robust check here, names could contain :
+        let trueCardName = cardName.indexOf(":") >= 0 ? cardName.split(":")[1].trim() : cardName;
+        return "images/200px-" + trueCardName.replace(/ /g, "_") + ".jpg"
     }
 
     getChoices(){
