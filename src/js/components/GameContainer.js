@@ -185,7 +185,8 @@ class GameContainer extends Component {
 
     handActiveTest(card) {
         return this.props.gameState.thisPlayer.currentChoice == null &&
-            (this.props.gameState.thisPlayer.hasActions || card.type != "ACTION");
+            (this.props.gameState.thisPlayer.hasActions || card.type != "ACTION") &&
+            card.type != "VICTORY";
     }
 
     bankActiveTest(card) {
