@@ -36,6 +36,12 @@ class ActionChoices extends Component {
         return "images/200px-" + trueCardName.replace(/ /g, "_") + ".jpg"
     }
 
+    getPlayerNameFromChoice(cardName){
+        //TODO: more robust check here, names could contain :
+        let playerName = cardName.indexOf(":") >= 0 ? <p>{cardName.split(":")[0].trim()}</p> : "";
+        return playerName;
+    }
+
     getChoices(){
         if (this.props.currentChoice.options[0] === "Yes" || this.props.currentChoice.options[0] === "2 Cards; 1 Action"){
             const choices = this.props.currentChoice.options.map((choice) => 
@@ -46,7 +52,11 @@ class ActionChoices extends Component {
         }
         else {
             const choices = this.props.currentChoice.options.map((choice) => 
-                    <li class='card-active'><label><img src={this.getCardImageByName(choice)} width="160px"/><input type={this.getChoiceType()} value={choice} name="options" /></label></li>
+                    <li class='card-active'>
+                        <label>{this.getPlayerNameFromChoice(choice)}<img src={this.getCardImageByName(choice)} width="160px"/>
+                        <input type={this.getChoiceType()} value={choice} name="options" />
+                        </label>
+                    </li>
             );
 
             return <div class='card-set'><ul class='card-set-active'>{choices}</ul></div>;
