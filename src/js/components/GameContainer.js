@@ -166,21 +166,23 @@ class GameContainer extends Component {
 
     handleEndGame(e) {
         if (e) e.preventDefault();
-
-        fetch(Utility.apiServer() + "/end")
-        .then(res => {
-            if (res.ok) { return true; }
-            else { res.text().then(text => {
-                console.error(text);
-              });               
-            }
-        })
-        .then((result) => {
-            if (result){
-                document.cookie = "playerName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                window.location.reload();
-            }
-        });
+        
+        if (confirm("Are you sure you want to end game?")) {
+	        fetch(Utility.apiServer() + "/end")
+	        .then(res => {
+	            if (res.ok) { return true; }
+	            else { res.text().then(text => {
+	                console.error(text);
+	              });               
+	            }
+	        })
+	        .then((result) => {
+	            if (result){
+	                document.cookie = "playerName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	                window.location.reload();
+	            }
+	        });
+        }
     }
 
     handActiveTest(card) {
@@ -208,15 +210,16 @@ class GameContainer extends Component {
             return (        
             <div className="game-container">
                 <PlayerList currentPlayerIndex={gameState.currentPlayerIndex} playerNames={gameState.playerNames} />
-                <div className="end-game-container">
-                    <button onClick={this.handleEndGame}>End Game</button>
-                </div>
+                
                 <TurnDashboard playerState={playerState} isCurrentPlayer={gameState.isCurrentPlayer} />
                 <div style={{clear:"both"}}><Bank cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} activeTest={this.bankActiveTest} name="Bank" onCardClick={this.handleBuyCard} /></div>
                 <div className="card-set-container1">
                     <CardSet className="card-set-hand" cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer && playerState.currentChoice == null} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/>
                     <CardSet className="card-set-played" cards={playerState.played} faceUp={true} active={false} name="Played"/>                    
                 </div>
+                <div className="clean-up-container">
+                	<button onClick={this.handleCleanup}>Clean Up</button>
+            	</div>
                 <div className="card-set-container2">
                     <CardSet className="card-set-deck" cards={playerState.deck} faceUp={false} active={false} name="Deck" />
                     <CardSet className="card-set-bought" cards={playerState.bought} faceUp={true} active={false} name="Bought"/>
@@ -225,7 +228,10 @@ class GameContainer extends Component {
                 
                 <div style={{ clear:'both'}} />
                 <ActionChoices currentChoice={playerState.currentChoice} onOptionClick={this.handleAction}/>                
-                <button onClick={this.handleCleanup}>Clean Up</button>
+                
+                <div className="end-game-container">
+                    <button onClick={this.handleEndGame}>End Game</button>
+                </div>
             </div>
             );
         }
