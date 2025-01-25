@@ -26,7 +26,8 @@ function loadGame(playerName, action, setGameState, setPlayerName) {
     fetch(myRequest, myInit)
     .then(res => res.json())
     .then((result) => {
-        document.cookie = "playerName=" + result.thisPlayer.name;
+        localStorage.setItem("playerName", result.thisPlayer.name);
+        localStorage.setItem("gameId", result.id);
         setPlayerName(result.thisPlayer.name);
         setGameState(result);
     });

@@ -33,7 +33,8 @@ function loadGame(playerName, action, randomCards, cardNames, setGameState) {
     fetch(myRequest, myInit)
     .then(res => res.json())
     .then((result) => {
-        document.cookie = "playerName=" + result.thisPlayer.name;
+        localStorage.setItem("playerName", result.thisPlayer.name);
+        localStorage.setItem("gameId", result.id);
         setGameState(result);
     });
 }

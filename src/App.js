@@ -49,19 +49,28 @@ function isGameActive(setGameActive, refreshGame, setGameState, setPlayerName) {
   })
   .then((result) => {
       if (result.activeGame) {
-        setGameActive(result.activeGame);
-        if (result.activeGame && Utility.getPlayerName()) {
-            refreshGame(null, Utility.getPlayerName(), setGameState);
-        }        
+        console.info("active game found on server");
+        setGameActive(true);
+        if (result.activeGame && result.activeGame === Utility.getGameId() && Utility.getPlayerName()) {
+          console.info("rejoining active game");
+          refreshGame(null, Utility.getPlayerName(), setGameState);
+        } else {
+          console.info("active game on server doesn't match local info, clearing player name");
+          Utility.clearPlayerName();
+          setPlayerName("");
+          setGameState(null);
+        }       
       } else {
+        console.info("no active game found on server, clearing player name");
         Utility.clearPlayerName();
+        Utility.clearGameId();
         setPlayerName("");
         setGameState(null);
       }
   })
   .catch(error => {
     console.log(error);
-    setGameState({"error":"Server down"})
+    setGameState({"error":"Server down"});
   });
 }
 
@@ -83,8 +92,7 @@ function App() {
     }
     
     if (!gameActive) {
-      console.info("confirmed no active game, clearing playerName cookie");
-      Utility.clearPlayerName();
+      console.info("no active game in JS state, checking server");
       activeGameInterval.current = setInterval(() => {
           isGameActive(setGameActive, tryRefresh, setGameState, setPlayerName);
       }, 1000);
@@ -92,7 +100,7 @@ function App() {
       //Clearing the interval
       return () => clearInterval(activeGameInterval.current);
     } else {
-      console.info("active game, stopping check");
+      console.info("active game in JS state, stopping check");
       if (activeGameInterval.current){
         clearInterval(activeGameInterval.current);
       }

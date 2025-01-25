@@ -94,6 +94,7 @@ export default function GameContainer({gameState, setGameState}) {
         if (!bank) {
             getBankData(setBank);
         }
+        // TODO: are there times I can pause this?
         const interval = setInterval(() => {
             getBankData(setBank);
         }, 2000);

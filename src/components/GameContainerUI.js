@@ -33,6 +33,10 @@ export default function GameContainerUI({gameState, setGameState, cardDefs, bank
                 <PlayerList currentPlayerIndex={gameState.currentPlayerIndex} playerNames={gameState.playerNames} />
                 <TurnDashboard playerState={gameState.thisPlayer} isCurrentPlayer={gameState.isCurrentPlayer} />
                 <div style={{clear:"both"}}><Bank cardDefs={cardDefs} cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" activeTest={(card) => {return bankActiveTest(card, cardDefs, gameState);}} /></div>
+                <div style={{clear:"both"}} className="notifications card-set">
+                    <h2>Activity</h2>
+                    <Notifications fetchMethod={notificationsFetchMethod} />
+                </div>
                 <div style={{clear:"both"}}>
                     <ActionChoices currentChoice={playerState.currentChoice} cardDefs={cardDefs} looking={gameState.thisPlayer.looking} /> 
                 </div>
@@ -40,10 +44,6 @@ export default function GameContainerUI({gameState, setGameState, cardDefs, bank
                     <CardSet className="card-set-hand" cardDefs={cardDefs} cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer && playerState.currentChoice == null} activeTest={(card) => {return handActiveTest(card, cardDefs, gameState);}} name="Hand" />
                     <div>
                         <CardSet additionalClassName="card-set-played" cardDefs={cardDefs} cards={playerState.played} faceUp={true} active={false} name="Played"/>    
-                        <div className="card-set notifications">
-                            <h2>Other Players</h2>
-                            <Notifications fetchMethod={notificationsFetchMethod} />
-                        </div>                
                     </div>
                 </div>
                 <div className="clean-up-container">

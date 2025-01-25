@@ -11,18 +11,19 @@ class Utility {
     }
 
     static getPlayerName() {
-        if (document.cookie) {
-            const cookies = document.cookie.split(";");
-            for (var i=0; i<cookies.length; i++){
-                if (cookies[i].startsWith("playerName=")){
-                    return cookies[i].substring(11);                    
-                }
-            }
-        }
+        return localStorage.getItem("playerName");
     }
 
     static clearPlayerName() {
-        document.cookie = "playerName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        localStorage.removeItem("playerName");
+    }
+
+    static getGameId() {
+        return localStorage.getItem("gameId");
+    }
+
+    static clearGameId() {
+        localStorage.removeItem("gameId");
     }
 }
 

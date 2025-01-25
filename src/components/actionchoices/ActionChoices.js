@@ -42,6 +42,8 @@ export default function ActionChoices({currentChoice, cardDefs, looking}) {
         return (<div></div>);
     }
 
+    
+
     return (
         <ActionChoicesUI currentChoice={currentChoice} cardDefs={cardDefs} handleChoice={(e) => handleChoice(e, playerName, gameStateSetter)} looking={looking} />        
     );

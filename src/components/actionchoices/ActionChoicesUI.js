@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext  } from "react";
 import Utility from "../../Utility.js";
 import { PlayerContext } from '../../context/PlayerContext.js';
 
+
 function getPlayerNameFromChoice(cardName){
     //TODO: more robust check here, names could contain :
     let playerName = cardName.indexOf(":") >= 0 ? <p>{cardName.split(":")[0].trim()}</p> : "";
@@ -37,14 +38,14 @@ function renderChoices(cardDefs, currentChoice){
      
     if (!optionsHaveCards){
         const choices = currentChoice.options.map((choiceOption) => 
-            <li className="no-cards-choices"><label>{choiceOption}<input type={getChoiceType(currentChoice)} value={choiceOption} name="options" /></label></li>
+            <li className="no-cards-choices" ><label>{choiceOption}<input type={getChoiceType(currentChoice)} value={choiceOption} name="options" /></label></li>
         );
 
         return <div>{currentChoice.text}<ul>{choices}</ul></div>;
     }
     else {
         const choices = currentChoice.options.map((choiceOption) => 
-                <li class='card-active'>
+                <li class='card-active' >
                     <label>{getPlayerNameFromChoice(choiceOption)}{getChoiceUI(choiceOption, cardDefs, currentChoice)}
                     
                     </label>
