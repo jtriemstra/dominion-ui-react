@@ -106,13 +106,16 @@ button {
 .current-player-true .notifications {
   height:15%;
   overflow:hidden;
+  width:98%;
 }
 .current-player-false .card-set-played {
   height:15%;
 }
 .current-player-false .notifications {
+  max-height:300px;
   height:85%;
-  overflow:hidden;
+  overflow:scroll;
+  width:98%;
 }
 .card-set-facedown {
   padding: 10px;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Utility from "../Utility";
 
-function getNotifications(setNotifications) {
+export function getNotifications(setNotifications) {
     var myHeaders = new Headers();
     myHeaders.append('pragma', 'no-cache');
     myHeaders.append('cache-control', 'no-cache');
@@ -13,21 +13,21 @@ function getNotifications(setNotifications) {
 
     var myRequest = new Request(Utility.apiServer() + "/notifications?nocache=" + Date.now());
 
-    fetch(myRequest, myInit)
+    /*fetch(myRequest, myInit)
     .then(res => res.json())
     .then((result) => {
         setNotifications(result);
     })
-    .catch(error => {console.log(error);});
+    .catch(error => {console.log(error);});*/
 }
 
-export default function Notifications(props) {
+export default function Notifications({fetchMethod = getNotifications}) {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
         
         const interval = setInterval(() => {
-            getNotifications(setNotifications);
+            fetchMethod(setNotifications);
         }, 2000);
  
         //Clearing the interval

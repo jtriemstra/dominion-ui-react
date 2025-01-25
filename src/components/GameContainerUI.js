@@ -22,7 +22,7 @@ function handActiveTest(card, cardDefs, gameState) {
         || (gameState.thisPlayer.phase === "buy" && cardDefs[card].treasure));
 }
 
-export default function GameContainerUI({gameState, setGameState, cardDefs, bank, playerName, handleActionsDone, handleCleanup}) {
+export default function GameContainerUI({gameState, setGameState, cardDefs, bank, playerName, handleActionsDone, handleCleanup, notificationsFetchMethod}) {
     
     let playerState = gameState.thisPlayer;
     let currentPlayerClass = "current-player-" + gameState.isCurrentPlayer;
@@ -42,7 +42,7 @@ export default function GameContainerUI({gameState, setGameState, cardDefs, bank
                         <CardSet additionalClassName="card-set-played" cardDefs={cardDefs} cards={playerState.played} faceUp={true} active={false} name="Played"/>    
                         <div className="card-set notifications">
                             <h2>Other Players</h2>
-                            <Notifications />
+                            <Notifications fetchMethod={notificationsFetchMethod} />
                         </div>                
                     </div>
                 </div>

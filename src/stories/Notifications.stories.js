@@ -15,5 +15,9 @@ export default {
 };
 
 export const Basic = {
-    args: {}
+    args: {
+        fetchMethod: (setNotifications) => {
+            setNotifications(["Test 1","Test 2"]);
+        }
+    }
 }
