@@ -34,31 +34,31 @@ function getCardImageByName(cardName){
 
 function renderChoices(cardDefs, currentChoice){
     let optionsHaveCards = false;
-    currentChoice.options.map((choice) => optionsHaveCards = optionsHaveCards || cardDefs[choice]);
+    currentChoice.options.map((choice) => optionsHaveCards = optionsHaveCards || cardDefs[choice.text]);
      
     if (!optionsHaveCards){
         const choices = currentChoice.options.map((choiceOption) => 
-            <li className="no-cards-choices" ><label>{choiceOption}<input type={getChoiceType(currentChoice)} value={choiceOption} name="options" /></label></li>
+            <li className="no-cards-choices" key={choiceOption.id}><label>{choiceOption.text}<input type={getChoiceType(currentChoice)} value={choiceOption.text} name="options" /></label></li>
         );
 
         return <div>{currentChoice.text}<ul>{choices}</ul></div>;
     }
     else {
         const choices = currentChoice.options.map((choiceOption) => 
-                <li class='card-active' >
-                    <label>{getPlayerNameFromChoice(choiceOption)}{getChoiceUI(choiceOption, cardDefs, currentChoice)}
+                <li className='card-active' key={choiceOption.id} >
+                    <label>{getPlayerNameFromChoice(choiceOption.text)}{getChoiceUI(choiceOption.text, cardDefs, currentChoice)}
                     
                     </label>
                 </li>
         );
 
-        return <div class='card-set'>{currentChoice.text}<ul class='card-set-active'>{choices}</ul></div>;
+        return <div className='card-set'>{currentChoice.text}<ul className='card-set-active'>{choices}</ul></div>;
     }
 }
 
 function renderLooking(looking, cardDefs) {
     return looking.map((card) => 
-        <li class='card-active'><img src={getCardImageByName(cardDefs[card].name)} width="160px"/></li>
+        <li className='card-active'><img src={getCardImageByName(cardDefs[card].name)} width="160px"/></li>
     );
 }
 

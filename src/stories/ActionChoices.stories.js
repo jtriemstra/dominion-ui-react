@@ -23,15 +23,16 @@ export const Cellar = {
     ,
     currentChoice: {
         "options": [
-            "Market",
-            "Gold",
-            "Estate",
-            "Gold"
+            {"text":"Market","id":"1"},
+            {"text":"Gold","id":"2"},
+            {"text":"Estate","id":"3"},
+            {"text":"Gold","id":"4"},
         ],
         "minChoices": 1,
         "maxChoices": 1,
         "text": "Choose cards to discard",
-        "followUpAction": "Cellar1"
+        "followUpAction": "Cellar1",
+        "ids":["a","b","c","d"]
     },
     looking:[]
   },
@@ -43,14 +44,15 @@ export const Moat = {
       ,
       currentChoice: {
           "options": [
-              "Moat",
-              "Moat",
-              "No"
+              {"text":"Moat","id":"1"},
+              {"text":"Moat","id":"3"},
+              {"text":"No","id":"2"},
           ],
           "minChoices": 1,
           "maxChoices": 1,
           "text": "Do you want to react to the attack",
-          "followUpAction": "defend"
+          "followUpAction": "defend",
+          "ids":["a","b","c"]
       },
       looking:[]
     }
@@ -62,17 +64,18 @@ export const Moat = {
       ,
       currentChoice: {
         "options": [
-            "DECK : Copper",
-            "DISCARD : Copper",
-            "TRASH : Copper",
-            "DECK : Silver",
-            "DISCARD : Silver",
-            "TRASH : Silver"
+            {"text":"DECK : Copper","id":"1"},
+            {"text":"DISCARD : Copper","id":"3"},
+            {"text":"TRASH : Copper","id":"2"},
+            {"text":"DECK : Silver","id":"6"},
+            {"text":"DISCARD : Silver","id":"5"},
+            {"text":"TRASH : Silver","id":"4"},
         ],
         "minChoices": 1,
         "maxChoices": 1,
         "text": "Choose a card and discard, trash, or return to the deck",
-        "followUpAction": "Sentry1"
+        "followUpAction": "Sentry1",
+        "ids":["a","b","c","d","e","f"]
       },
       looking:["Copper","Silver"]
     },
@@ -84,15 +87,16 @@ export const Moat = {
       ,
       currentChoice: {
         "options": [
-            "Estate",
-            "Estate",
-            "Copper",
-            "Silver"
+            {"text":"Estate","id":"1"},
+            {"text":"Estate","id":"2"},
+            {"text":"Copper","id":"3"},
+            {"text":"Silver","id":"4"},
         ],
         "minChoices": 0,
         "maxChoices": 4,
         "text": "Choose cards to discard",
-        "followUpAction": "Chapel1"
+        "followUpAction": "Chapel1",
+        "ids":["a","b","c","d"]
       },
       looking:[]
     },

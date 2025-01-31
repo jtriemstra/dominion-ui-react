@@ -76,17 +76,18 @@ export const SinglePlayerWithAction = {
         "phase":"buy",
         "currentChoice":{
           "options": [
-              "DECK : Copper",
-              "DISCARD : Copper",
-              "TRASH : Copper",
-              "DECK : Silver",
-              "DISCARD : Silver",
-              "TRASH : Silver"
+              {"text":"DECK : Copper","id":"1"},
+              {"text":"DISCARD : Copper","id":"21"},
+              {"text":"TRASH : Copper","id":"3"},
+              {"text":"DECK : Silver","id":"4"},
+              {"text":"DISCARD : Silver","id":"5"},
+              {"text":"TRASH : Silver","id":"6"},
           ],
           "minChoices": 1,
           "maxChoices": 1,
           "text": "Choose a card and discard, trash, or return to the deck",
-          "followUpAction": "Sentry1"
+          "followUpAction": "Sentry1",
+          "ids":["a","b","c","d","e","f"]
         },
         "hasActions":true,
         "numberOfActions":1,
