@@ -13,12 +13,14 @@ export function getNotifications(setNotifications) {
 
     var myRequest = new Request(Utility.apiServer() + "/notifications?nocache=" + Date.now());
 
-    fetch(myRequest, myInit)
-    .then(res => res.json())
-    .then((result) => {
-        setNotifications(result);
-    })
-    .catch(error => {console.log(error);});
+    if (!Utility.disableNetwork()) {
+        fetch(myRequest, myInit)
+        .then(res => res.json())
+        .then((result) => {
+            setNotifications(result);
+        })
+        .catch(error => {console.log(error);});
+    }
 }
 
 export default function Notifications({fetchMethod = getNotifications}) {

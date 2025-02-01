@@ -10,6 +10,10 @@ class Utility {
         
     }
 
+    static disableNetwork() {
+        return process.env.DISABLE_NETWORK ? true : false;
+    }
+
     static getPlayerName() {
         return localStorage.getItem("playerName");
     }
