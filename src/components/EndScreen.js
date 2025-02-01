@@ -9,18 +9,32 @@ function renderCards(cards) {
     return result;
 }
 
-function handleEndGame(e) {
+function handleEndGame(e, callback) {
+    if (e) e.preventDefault();
 
+    fetch(Utility.apiServer() + "/end")
+    .then(res => {
+        if (res.ok) { return true; }
+        else { res.text().then(text => {
+            console.error(text);
+            });               
+        }
+    })
+    .then((result) => {
+        if (result){
+            callback();
+        }
+    });
 }
 
-export default function EndScreen({gameState}) {
+export default function EndScreen({gameState, endGameCallback}) {
     return (
         <div className="end-screen">
             <div className="end-screen-content">
                 <h2>Game Over</h2>
                 <p>You have {gameState.points} points</p>
                 <p>{renderCards(gameState.cards)}</p>
-                <button onClick={handleEndGame}>End Game</button>
+                <button onClick={(e, endGameCallback) => handleEndGame(e, endGameCallback)}>End Game</button>
             </div>
         </div>
     );

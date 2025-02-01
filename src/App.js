@@ -78,6 +78,7 @@ function App() {
   const [gameState, setGameState] = useState(null);
   const [playerName, setPlayerName] = useState("");
   const [gameActive, setGameActive] = useState(false);
+  const [endingGame, setEndingGame] = useState(false);
   const activeGameInterval = useRef();
   const refreshInterval = useRef();
 
@@ -120,6 +121,12 @@ function App() {
 
   }, [gameActive, playerName]);
 
+  let gameEndHandler = () => {
+    Utility.clearGameId();
+    Utility.clearPlayerName();
+    setEndingGame(true);
+  };
+
   let splashScreen = null;
   if (!gameState){
     splashScreen = <SplashScreen gameState={gameState} setGameState={setGameState} refreshGame={tryRefresh} isGameActive={gameActive} setPlayerName={setPlayerName} />;
@@ -127,12 +134,12 @@ function App() {
 
   let endScreen = null;
   if (gameState && gameState.isGameOver) {
-    endScreen = <EndScreen gameState={gameState} />;
+    endScreen = <EndScreen gameState={gameState} endGameCallback={gameEndHandler} />;
   }
 
   let gameContainer = null;
   if (gameState && !gameState.error){
-    gameContainer = <GameContainer gameState={gameState} setGameState={setGameState} />;
+    gameContainer = <GameContainer gameState={gameState} setGameState={setGameState} endGameFlag={endingGame} />;
   }
 
   let error;

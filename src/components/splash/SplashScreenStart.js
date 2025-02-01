@@ -13,7 +13,8 @@ function handleStart(event, cardSetIndex, setGameState){
                 "Artisan,Bureaucrat,Council Room,Festival,Harbinger,Laboratory,Moneylender,Sentry,Vassal,Village",
                 "Cellar,Council Room,Festival,Gardens,Library,Harbinger,Militia,Poacher,Smithy,Throne Room",
                 "Berserker,Highway,Nomads,Oasis,Trail,Cellar,Library,Moneylender,Throne Room,Workshop",
-                "Crossroads,Fools Gold,Guard Dog,Souk,Witchs Hut,Festival,Laboratory,Remodel,Sentry,Vassal"];
+                "Crossroads,Fools Gold,Guard Dog,Souk,Witchs Hut,Festival,Laboratory,Remodel,Sentry,Vassal",
+                ""];
     loadGame(playerName, "start", false, sets[cardSetIndex], setGameState);
 }
 
@@ -22,6 +23,8 @@ function loadGame(playerName, action, randomCards, cardNames, setGameState) {
     var myHeaders = new Headers();
     myHeaders.append('pragma', 'no-cache');
     myHeaders.append('cache-control', 'no-cache');
+
+    //test
 
     var myInit = {
         method: 'GET',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext  } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import PlayerList from "./PlayerList";
 import TurnDashboard from "./TurnDashboard";
 import Bank from "./cardset/Bank";
@@ -79,10 +79,15 @@ function handleActionsDone(e, playerName, gameStateSetter){
 }
 
 
-export default function GameContainer({gameState, setGameState}) {
+export default function GameContainer({gameState, setGameState, endGameFlag}) {
     const [cardDefs, setCardDefs] = useState(null);
     const [bank, setBank] = useState(null);
     const [playerName, setPlayerName] = useState("");
+    const bankIntervalRef = useRef();
+
+    if (endGameFlag) {
+        clearInterval(bankIntervalRef.current);
+    }
 
     useEffect(() => {
         if (!cardDefs) {
@@ -91,16 +96,20 @@ export default function GameContainer({gameState, setGameState}) {
     }, [cardDefs]);
 
     useEffect(() => {
+        if (endGameFlag) {
+            return;
+        }
+        
         if (!bank) {
             getBankData(setBank);
         }
         // TODO: are there times I can pause this?
-        const interval = setInterval(() => {
+        bankIntervalRef.current = setInterval(() => {
             getBankData(setBank);
         }, 2000);
  
         //Clearing the interval
-        return () => clearInterval(interval);
+        return () => clearInterval(bankIntervalRef.current);
     }, [bank]);
 
     useEffect(() => {
