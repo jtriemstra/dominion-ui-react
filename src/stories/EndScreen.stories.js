@@ -17,8 +17,15 @@ export default {
   },
 };
 
+let dummySetEndingGame = (x) => {console.log("set end game to " + x);};
+let dummyApi = {
+  fetchNull: (url, callback) => {console.log("api call to " + url); callback();}
+}
+
 export const End = {
   args: {
+    setEndingGame: dummySetEndingGame,
+    api: dummyApi,
     gameState: {
         "thisPlayer": {
             "name": "asdf",

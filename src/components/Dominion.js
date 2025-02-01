@@ -107,19 +107,13 @@ function Dominion() {
   
     }, [gameActive, playerName]);
   
-    let gameEndHandler = () => {
-      Utility.clearGameId();
-      Utility.clearPlayerName();
-      setEndingGame(true);
-    };
-
     return (
         <DominionUI gameState={gameState} 
             setGameState={setGameState} 
             tryRefresh={tryRefresh} 
             gameActive={gameActive} 
             setPlayerName={setPlayerName} 
-            gameEndHandler={gameEndHandler} 
+            setEndingGame={setEndingGame} 
             endingGame={endingGame} />
     )
 }

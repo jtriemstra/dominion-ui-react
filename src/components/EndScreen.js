@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext  } from "react";
 import Utility from "../Utility.js";
+import Api from "../Api.js";
 
 function renderCards(cards) {
     let result = "";
@@ -9,29 +10,19 @@ function renderCards(cards) {
     return result;
 }
 
-function handleEndGame(e, callback) {
+function handleEndGame(e, api, callback) {
     if (e) e.preventDefault();
 
-    callback();
-
-    if (!Utility.disableNetwork()) {    
-        fetch(Utility.apiServer() + "/end")
-        .then(res => {
-            if (res.ok) { return true; }
-            else { res.text().then(text => {
-                console.error(text);
-                });               
-            }
-        })
-        .then((result) => {
-            if (result){
-                
-            }
-        });
-    }
+    api.fetchNull("/end", callback);    
 }
 
-export default function EndScreen({gameState, endGameCallback}) {
+function endGameCallback(setEndingGame) {
+    Utility.clearGameId();
+    Utility.clearPlayerName();
+    setEndingGame(true);
+}
+
+export default function EndScreen({gameState, api = new Api(), setEndingGame}) {
     
     return (
         <div className="end-screen">
@@ -39,7 +30,7 @@ export default function EndScreen({gameState, endGameCallback}) {
                 <h2>Game Over</h2>
                 <p>You have {gameState.points} points</p>
                 <p>{renderCards(gameState.cards)}</p>
-                <button onClick={(e) => handleEndGame(e, endGameCallback)}>End Game</button>
+                <button onClick={(e) => handleEndGame(e, api, () => endGameCallback(setEndingGame))}>End Game</button>
             </div>
         </div>
     );
