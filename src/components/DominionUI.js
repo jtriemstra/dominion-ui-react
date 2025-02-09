@@ -2,8 +2,9 @@ import Header from './Header.js';
 import SplashScreen from './splash/SplashScreen.js';
 import EndScreen from "./EndScreen.js";
 import GameContainer from "./GameContainer.js";
+import Api from "../Api.js";
 
-function DominionUI({gameState, setGameState, tryRefresh, gameActive, setPlayerName, setEndingGame, endingGame}) {
+function DominionUI({gameState, setGameState, tryRefresh, gameActive, setPlayerName, setEndingGame, endingGame, api = new Api(), utility}) {
 
   
     let splashScreen = null;
@@ -13,12 +14,12 @@ function DominionUI({gameState, setGameState, tryRefresh, gameActive, setPlayerN
   
     let endScreen = null;
     if (gameState && gameState.isGameOver) {
-      endScreen = <EndScreen gameState={gameState} setEndingGame={setEndingGame} />;
+      endScreen = <EndScreen gameState={gameState} setEndingGame={setEndingGame} api={api} />;
     }
   
     let gameContainer = null;
     if (gameState && !gameState.error){
-      gameContainer = <GameContainer gameState={gameState} setGameState={setGameState} endGameFlag={endingGame} />;
+      gameContainer = <GameContainer gameState={gameState} setGameState={setGameState} endGameFlag={endingGame} api={api} utility={utility} />;
     }
   
     let error;

@@ -1,55 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import DominionUI from './DominionUI.js'
 import Utility from "../Utility.js";
+import Api from "../Api.js";
 
-function tryRefresh(e, playerName, gameStateSetter) {
-    console.debug("refreshing");
+function tryRefresh(e, api, playerName, gameStateSetter) {
     if (e) e.preventDefault();
-  
-    fetch(Utility.apiServer() + "/refresh?playerName=" + playerName)
-    .then(res => {
-        if (res.ok ) { return res.json(); }
-        else { res.text().then(text => {
-            console.error(text);
-          });               
-        }
-    })
-    .then((result) => {
-        if (result){
-            gameStateSetter(result);
-        }
-    })
-    .catch(error => {console.log(error);});
+    api.fetchJSON("/refresh?playerName=" + playerName, gameStateSetter);  
   }
   
-  function isGameActive(setGameActive, refreshGame, setGameState, setPlayerName) {
-    console.debug("checking active");
-    var myHeaders = new Headers();
-    myHeaders.append('pragma', 'no-cache');
-    myHeaders.append('cache-control', 'no-cache');
-  
-    var myInit = {
-        method: 'GET',
-        headers: myHeaders,
-    };
-  
-    var myRequest = new Request(Utility.apiServer() + "/activeGame");
-  
-    fetch(myRequest, myInit)
-    .then(res => {
-      if (res.ok ) { return res.json(); }
-      else { res.text().then(text => {
-          console.error(text);
-        });               
-      }
-    })
-    .then((result) => {
-        if (result.activeGame) {
+  function isGameActive(api, utility, setGameActive, refreshGame, setGameState, setPlayerName) {
+    api.fetchJSON("/activeGame", (result) => {
+      if (result.activeGame) {
           console.info("active game found on server");
           setGameActive(true);
-          if (result.activeGame && result.activeGame === Utility.getGameId() && Utility.getPlayerName()) {
+          if (result.activeGame && result.activeGame === utility.getGameId() && utility.getPlayerName()) {
             console.info("rejoining active game");
-            refreshGame(null, Utility.getPlayerName(), setGameState);
+            refreshGame(null, api, utility.getPlayerName(), setGameState);
           } else {
             console.info("active game on server doesn't match local info, clearing player name");
             Utility.clearPlayerName();
@@ -63,31 +29,29 @@ function tryRefresh(e, playerName, gameStateSetter) {
           setPlayerName("");
           setGameState(null);
         }
-    })
-    .catch(error => {
-      console.log(error);
-      setGameState({"error":"Server down"});
-    });
+    });  
   }
 
-function Dominion() {
+function Dominion({api = new Api(), utility = new Utility()}) {
     const [gameState, setGameState] = useState(null);
     const [playerName, setPlayerName] = useState("");
     const [gameActive, setGameActive] = useState(false);
     const [endingGame, setEndingGame] = useState(false);
     const activeGameInterval = useRef();
     const refreshInterval = useRef();
+
+    //console.log(api);
   
     useEffect(() => {
       if (!playerName) {
-        if (Utility.getPlayerName()) {
-          setPlayerName(Utility.getPlayerName());
+        if (utility.getPlayerName()) {
+          setPlayerName(utility.getPlayerName());
         }
       }
       
       if (!gameActive) {
         activeGameInterval.current = setInterval(() => {
-            isGameActive(setGameActive, tryRefresh, setGameState, setPlayerName);
+            isGameActive(api, utility, setGameActive, tryRefresh, setGameState, setPlayerName);
         }, 1000);
         
         //Clearing the interval
@@ -97,15 +61,17 @@ function Dominion() {
           clearInterval(activeGameInterval.current);
         }
       }
-   
-      if (playerName && gameActive) {
-        refreshInterval.current = setInterval(() => tryRefresh(null, playerName, setGameState), 500);   
+
+      if (endingGame) {
+        clearInterval(refreshInterval.current);
+      } else if (playerName && gameActive) {
+        refreshInterval.current = setInterval(() => tryRefresh(null, api, playerName, setGameState), 500);   
         return () => { clearInterval(refreshInterval.current); } 
       } else {
         console.log("either no playername or no active game;");
       }
   
-    }, [gameActive, playerName]);
+    }, [gameActive, playerName, endingGame]);
   
     return (
         <DominionUI gameState={gameState} 
@@ -114,7 +80,9 @@ function Dominion() {
             gameActive={gameActive} 
             setPlayerName={setPlayerName} 
             setEndingGame={setEndingGame} 
-            endingGame={endingGame} />
+            endingGame={endingGame}
+            api={api} 
+            utility={utility} />
     )
 }
 

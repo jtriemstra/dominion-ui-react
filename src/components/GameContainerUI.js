@@ -5,6 +5,7 @@ import Notifications from "./Notifications";
 import Bank from "./cardset/Bank";
 import CardSet from "./cardset/CardSet";
 import ActionChoices from "./actionchoices/ActionChoices.js";
+import Api from "../Api";
 
 function bankActiveTest(card, cardDefs, gameState) {
     let result = gameState.thisPlayer.currentChoice === null &&
@@ -22,7 +23,7 @@ function handActiveTest(card, cardDefs, gameState) {
         || (gameState.thisPlayer.phase === "buy" && cardDefs[card].treasure));
 }
 
-export default function GameContainerUI({gameState, setGameState, cardDefs, bank, playerName, handleActionsDone, handleCleanup, notificationsFetchMethod}) {
+export default function GameContainerUI({gameState, setGameState, cardDefs, bank, playerName, handleActionsDone, handleCleanup, api = new Api()}) {
     
     let playerState = gameState.thisPlayer;
     let currentPlayerClass = "current-player-" + gameState.isCurrentPlayer;
@@ -35,7 +36,7 @@ export default function GameContainerUI({gameState, setGameState, cardDefs, bank
                 <div style={{clear:"both"}}><Bank cardDefs={cardDefs} cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" activeTest={(card) => {return bankActiveTest(card, cardDefs, gameState);}} /></div>
                 <div style={{clear:"both"}} className="notifications card-set">
                     <h2>Activity</h2>
-                    <Notifications fetchMethod={notificationsFetchMethod} />
+                    <Notifications api={api} />
                 </div>
                 <div style={{clear:"both"}}>
                     <ActionChoices currentChoice={playerState.currentChoice} cardDefs={cardDefs} looking={gameState.thisPlayer.looking} /> 
@@ -47,8 +48,8 @@ export default function GameContainerUI({gameState, setGameState, cardDefs, bank
                     </div>
                 </div>
                 <div className="clean-up-container">
-                    <button disabled={playerState.currentChoice != null} onClick={(e) => handleActionsDone(e, playerName, setGameState)}>Skip Actions</button>
-                    <button disabled={playerState.currentChoice != null} onClick={(e) => handleCleanup(e, playerName, setGameState)}>Clean Up</button>
+                    <button disabled={playerState.currentChoice != null} onClick={(e) => handleActionsDone(e, api, playerName, setGameState)}>Skip Actions</button>
+                    <button disabled={playerState.currentChoice != null} onClick={(e) => handleCleanup(e, api, playerName, setGameState)}>Clean Up</button>
                 </div>
                 <div className="card-set-container2">
                     <CardSet className="card-set-deck" cardDefs={cardDefs} cards={playerState.deck} faceUp={false} active={false} name="Deck" />

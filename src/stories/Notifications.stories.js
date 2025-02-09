@@ -14,10 +14,12 @@ export default {
   }
 };
 
+let mockApi = {
+  fetchJSON: (url, callback) => {console.log("api call to " + url); callback(["Test 1", "Test 2"]);}
+}
+
 export const Basic = {
     args: {
-        fetchMethod: (setNotifications) => {
-            setNotifications(["Test 1","Test 2"]);
-        }
+        api:mockApi
     }
 }

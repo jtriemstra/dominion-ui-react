@@ -17,6 +17,15 @@ export default {
   },
 };
 
+// notifications
+let mockApi = {
+  fetchJSON: (url, callback) => {console.log("api call to " + url); callback(["Test 1", "Test 2"]);}
+}
+
+let mockApi1 = {
+  fetchJSON: (url, callback) => {console.log("api call to " + url); callback(["Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9"]);}
+}
+
 export const SinglePlayerStart = {
   args: {
     gameState:{"thisPlayer":
@@ -53,7 +62,8 @@ export const SinglePlayerStart = {
     bank: [{"name":"Gold","quantity":30},{"name":"Silver","quantity":40},{"name":"Copper","quantity":53},{"name":"Chapel","quantity":10},{"name":"Workshop","quantity":10},{"name":"Bureaucrat","quantity":10},{"name":"Gardens","quantity":10},{"name":"Throne Room","quantity":10},{"name":"Festival","quantity":10},{"name":"Bandit","quantity":10},{"name":"Sentry","quantity":10},{"name":"Witch","quantity":10},{"name":"Artisan","quantity":10},{"name":"Estate","quantity":17},{"name":"Duchy","quantity":12},{"name":"Province","quantity":12},{"name":"Curse","quantity":30}],
     playerName:"asdf",
     handleActionsDone: (e, playerName, gameStateSetter)=>{console.log("click skip actions")},
-    handleCleanup: (e, playerName, gameStateSetter)=>{console.log("click cleanup")}
+    handleCleanup: (e, playerName, gameStateSetter)=>{console.log("click cleanup")},
+    api: mockApi
   }
 };
 
@@ -106,7 +116,8 @@ export const SinglePlayerWithAction = {
     bank: [{"name":"Gold","quantity":30},{"name":"Silver","quantity":40},{"name":"Copper","quantity":53},{"name":"Chapel","quantity":10},{"name":"Workshop","quantity":10},{"name":"Bureaucrat","quantity":10},{"name":"Gardens","quantity":10},{"name":"Throne Room","quantity":10},{"name":"Festival","quantity":10},{"name":"Bandit","quantity":10},{"name":"Sentry","quantity":10},{"name":"Witch","quantity":10},{"name":"Artisan","quantity":10},{"name":"Estate","quantity":17},{"name":"Duchy","quantity":12},{"name":"Province","quantity":12},{"name":"Curse","quantity":30}],
     playerName:"asdf",
     handleActionsDone: (e, playerName, gameStateSetter)=>{console.log("click skip actions")},
-    handleCleanup: (e, playerName, gameStateSetter)=>{console.log("click cleanup")}
+    handleCleanup: (e, playerName, gameStateSetter)=>{console.log("click cleanup")},
+    api: mockApi
   }
 };
 
@@ -147,9 +158,7 @@ export const SinglePlayerOffTurn = {
     playerName:"asdf",
     handleActionsDone: (e, playerName, gameStateSetter)=>{console.log("click skip actions")},
     handleCleanup: (e, playerName, gameStateSetter)=>{console.log("click cleanup")},
-    notificationsFetchMethod: (setNotifications) => {
-      setNotifications(["Test 1","Test 2"]);
-    }
+    api: mockApi
   }
 };
 
@@ -190,8 +199,6 @@ export const SinglePlayerOffTurnWithManyNotifications = {
     playerName:"asdf",
     handleActionsDone: (e, playerName, gameStateSetter)=>{console.log("click skip actions")},
     handleCleanup: (e, playerName, gameStateSetter)=>{console.log("click cleanup")},
-    notificationsFetchMethod: (setNotifications) => {
-      setNotifications(["Test 1","Test 2","Test 3","Test 4", "Test 5", "Test 6", "Test 7", "Test 8", "Test 9", "Test 10"]);
-    }
+    api: mockApi1
   }
 };

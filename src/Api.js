@@ -1,4 +1,4 @@
-class Api {
+export default class Api {
     apiServer() {
         // if (process.env.APP_ENV === 'prod'){
         //     return "https://jtriemstra-dominion-api.herokuapp.com/v3";
@@ -27,6 +27,22 @@ class Api {
     }
 
     fetchJSON(url, callback) {
+        var myHeaders = new Headers();
+        myHeaders.append('pragma', 'no-cache');
+        myHeaders.append('cache-control', 'no-cache');
+    
+        var myInit = {
+            method: 'GET',
+            headers: myHeaders,
+        };
+    
+        var myRequest = new Request(this.apiServer() + url);
 
+        fetch(myRequest, myInit)
+            .then(res => res.json())
+            .then((result) => {
+                callback(result);
+            })
+            .catch(error => {console.log(error);});
     }
 }

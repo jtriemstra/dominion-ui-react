@@ -1,4 +1,4 @@
-class Utility {
+export default class Utility {
     static apiServer() {
        // if (process.env.APP_ENV === 'prod'){
        //     return "https://jtriemstra-dominion-api.herokuapp.com/v3";
@@ -14,7 +14,7 @@ class Utility {
         return process.env.DISABLE_NETWORK ? true : false;
     }
 
-    static getPlayerName() {
+    getPlayerName() {
         return localStorage.getItem("playerName");
     }
 
@@ -22,7 +22,7 @@ class Utility {
         localStorage.removeItem("playerName");
     }
 
-    static getGameId() {
+    getGameId() {
         return localStorage.getItem("gameId");
     }
 
@@ -31,4 +31,3 @@ class Utility {
     }
 }
 
-export default Utility;
