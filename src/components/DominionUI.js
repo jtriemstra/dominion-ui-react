@@ -5,11 +5,11 @@ import GameContainer from "./GameContainer.js";
 import Api from "../Api.js";
 
 function DominionUI({gameState, setGameState, tryRefresh, gameActive, setPlayerName, setEndingGame, endingGame, api = new Api(), utility}) {
-
+console.log(gameState);
   
     let splashScreen = null;
     if (!gameState){
-      splashScreen = <SplashScreen gameState={gameState} setGameState={setGameState} refreshGame={tryRefresh} isGameActive={gameActive} setPlayerName={setPlayerName} />;
+      splashScreen = <SplashScreen gameState={gameState} setGameState={setGameState} refreshGame={tryRefresh} isGameActive={gameActive} setPlayerName={setPlayerName} api={api} setEndingGame={setEndingGame} />;
     }
   
     let endScreen = null;

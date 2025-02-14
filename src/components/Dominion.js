@@ -4,33 +4,33 @@ import Utility from "../Utility.js";
 import Api from "../Api.js";
 
 function tryRefresh(e, api, playerName, gameStateSetter) {
-    if (e) e.preventDefault();
-    api.fetchJSON("/refresh?playerName=" + playerName, gameStateSetter);  
-  }
+  if (e) e.preventDefault();
+  api.fetchJSON("/refresh?playerName=" + playerName, gameStateSetter);  
+}
   
-  function isGameActive(api, utility, setGameActive, refreshGame, setGameState, setPlayerName) {
-    api.fetchJSON("/activeGame", (result) => {
-      if (result.activeGame) {
-          console.info("active game found on server");
-          setGameActive(true);
-          if (result.activeGame && result.activeGame === utility.getGameId() && utility.getPlayerName()) {
-            console.info("rejoining active game");
-            refreshGame(null, api, utility.getPlayerName(), setGameState);
-          } else {
-            console.info("active game on server doesn't match local info, clearing player name");
-            Utility.clearPlayerName();
-            setPlayerName("");
-            setGameState(null);
-          }       
+function isGameActive(api, utility, setGameActive, refreshGame, setGameState, setPlayerName) {
+  api.fetchJSON("/activeGame", (result) => {
+    if (result.activeGame) {
+        console.info("active game found on server");
+        setGameActive(true);
+        if (result.activeGame && result.activeGame === utility.getGameId() && utility.getPlayerName()) {
+          console.info("rejoining active game");
+          refreshGame(null, api, utility.getPlayerName(), setGameState);
         } else {
-          console.info("no active game found on server, clearing player name");
+          console.info("active game on server doesn't match local info, clearing player name");
           Utility.clearPlayerName();
-          Utility.clearGameId();
           setPlayerName("");
           setGameState(null);
-        }
-    });  
-  }
+        }       
+      } else {
+        console.info("no active game found on server, clearing player name");
+        Utility.clearPlayerName();
+        Utility.clearGameId();
+        setPlayerName("");
+        setGameState(null);
+      }
+  });  
+}
 
 function Dominion({api = new Api(), utility = new Utility()}) {
     const [gameState, setGameState] = useState(null);
@@ -64,6 +64,9 @@ function Dominion({api = new Api(), utility = new Utility()}) {
 
       if (endingGame) {
         clearInterval(refreshInterval.current);
+        setGameState(null);
+        setGameActive(false);
+        setEndingGame(false);
       } else if (playerName && gameActive) {
         refreshInterval.current = setInterval(() => tryRefresh(null, api, playerName, setGameState), 500);   
         return () => { clearInterval(refreshInterval.current); } 
