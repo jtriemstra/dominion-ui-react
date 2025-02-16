@@ -35,6 +35,14 @@ class ActionChoices extends Component {
         let trueCardName = cardName.indexOf(":") >= 0 ? cardName.split(":")[1].trim() : cardName;
         return "images/200px-" + trueCardName.replace(/ /g, "_") + ".jpg"
     }
+    
+    getChoiceUI(choice) {
+		if (this.props.cardDefs[choice]) {
+			return <><img src={this.getCardImageByName(this.props.cardDefs[choice].name)} width="160px"/><input type={this.getChoiceType()} value={choice} name="options" checked="false" /></>;
+		} else {
+			return <><input type={this.getChoiceType()} value={choice} name="options" className="no-image-checkbox" checked="false" /><div className="no-image-choice">{choice}</div></>;
+		}
+	}
 
     getPlayerNameFromChoice(cardName){
         //TODO: more robust check here, names could contain :
@@ -43,23 +51,28 @@ class ActionChoices extends Component {
     }
 
     getChoices(){
-        if (this.props.currentChoice.options[0] === "Yes" || this.props.currentChoice.options[0] === "2 Cards; 1 Action"){
+		let cardDefs = this.props.cardDefs;
+		let optionsHaveCards = false;
+		this.props.currentChoice.options.map((choice) => optionsHaveCards = optionsHaveCards || cardDefs[choice]);
+		 
+        if (!optionsHaveCards){
             const choices = this.props.currentChoice.options.map((choice) => 
                 <li><label>{choice}<input type={this.getChoiceType()} value={choice} name="options" /></label></li>
             );
 
-            return <ul>{choices}</ul>;
+            return <div>{this.props.currentChoice.text}<ul>{choices}</ul></div>;
         }
         else {
+			
             const choices = this.props.currentChoice.options.map((choice) => 
                     <li class='card-active'>
-                        <label>{this.getPlayerNameFromChoice(choice)}<img src={this.getCardImageByName(choice)} width="160px"/>
-                        <input type={this.getChoiceType()} value={choice} name="options" />
+                        <label>{this.getPlayerNameFromChoice(choice)}{this.getChoiceUI(choice)}
+                        
                         </label>
                     </li>
             );
 
-            return <div class='card-set'><ul class='card-set-active'>{choices}</ul></div>;
+            return <div class='card-set'>{this.props.currentChoice.text}<ul class='card-set-active'>{choices}</ul></div>;
         }
     }
 

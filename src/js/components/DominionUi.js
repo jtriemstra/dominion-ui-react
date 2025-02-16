@@ -11,7 +11,8 @@ class DominionUi extends Component {
     super();
 
     this.state = {
-      gameState: null
+      gameState: null,
+      cards: null
     };
 
     this.handleNewState = this.handleNewState.bind(this);
@@ -34,6 +35,23 @@ class DominionUi extends Component {
     if(this.getPlayerName()){
         this.handleRefresh();
     }
+    this.getCardData();
+  }
+  
+  getCardData() {
+	 fetch(Utility.apiServer() + "/cards")
+    .then(res => {
+        if (res.ok) { return res.json(); }
+        else { res.text().then(text => {
+            console.error(text);
+          });               
+        }
+    })
+    .then((result) => {
+        if (result){
+            this.setState({cards: result});
+        }
+    });
   }
 
   handleRefresh(e) {
@@ -78,7 +96,7 @@ class DominionUi extends Component {
 
     let gameContainer = null;
     if (gameState){
-      gameContainer = <GameContainer gameState={gameState} onGameUpdate={this.handleNewState} />;
+      gameContainer = <GameContainer gameState={gameState} onGameUpdate={this.handleNewState} cardDefs={this.state.cards} />;
     }
 
     return (        

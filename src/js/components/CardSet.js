@@ -22,20 +22,23 @@ class CardSet extends Component {
     }
 
     renderInactiveCards(){
-        const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
-        return normalizedCards.map((card) => <li><img width="160px" src={this.getCardImageByName(card.name)} /></li>);
+		let cardDefs = this.props.cardDefs;
+		// TODO: think this transformBank is old
+		const normalizedCards = this.props.cards.map ? this.props.cards : this.transformBank(this.props.cards);
+        return normalizedCards.map((card) => <li><img width="160px" src={this.getCardImageByName(cardDefs[card].name)} /></li>);
     }
 
     renderActiveCards(){
         const normalizedCards = this.props.cards;
+		let cardDefs = this.props.cardDefs;
 
         if (this.props.activeTest){
             return normalizedCards.map((card) => {
                 if (this.props.activeTest(card)){
-                    return <li className="card-active"><a href="#" data-cardname={card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(card.name)} /></a></li>
+                    return <li className="card-active"><a href="#" data-cardname={cardDefs[card].name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(cardDefs[card].name)} /></a></li>
                 }
                 else {
-                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(card.name)} /></li>
+                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(cardDefs[card].name)} /></li>
                 }
             }
                 
@@ -43,7 +46,7 @@ class CardSet extends Component {
         }
 
         return normalizedCards.map((card) => 
-            <li><a href="#" data-cardname={card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(card.name)} /></a></li>
+            <li><a href="#" data-cardname={cardDefs[card].name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(cardDefs[card].name)} /></a></li>
         );
     }
 

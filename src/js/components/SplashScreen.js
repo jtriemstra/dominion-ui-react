@@ -28,9 +28,9 @@ class SplashScreen extends Component {
 
     handleStart(event){
         event.preventDefault();
-        const sets = ["Cellar,Market,Militia,Mine,Moat,Remodel,Smithy,Village,Woodcutter,Workshop",
-                    "Adventurer,Bureaucrat,Chancellor,Chapel,Feast,Laboratory,Market,Mine,Moneylender,Throne Room",
-                    "Bureaucrat,Chancellor,Council Room,Festival,Library,Militia,Moat,Spy,Thief,Village",
+        const sets = ["Cellar,Market,Merchant,Militia,Mine,Moat,Remodel,Smithy,Village,Workshop",
+                    "Artisan,Bandit,Bureaucrat,Chapel,Festival,Gardens,Sentry,Throne Room,Witch,Workshop",
+                    "Artisan,Bureaucrat,Council Room,Festival,Harbinger,Laboratory,Moneylender,Sentry,Vassal,Village",
                     "Cellar,Chapel,Feast,Gardens,Laboratory,Thief,Village,Witch,Woodcutter,Workshop",
                     "Bureaucrat,Cellar,Festival,Library,Market,Remodel,Smithy,Throne Room,Village,Woodcutter",
                     "Cache,Crossroads,Develop,Haggler,Jack of All Trades,Margrave,Nomad Camp,Oasis,Spice Merchant,Stables",
@@ -120,9 +120,9 @@ class SplashScreen extends Component {
         if (!this.state.activeGame){
             return (
                 <div>
-                    <button onClick={this.handleStart} data-setindex="0">Start Game With Basic Deck</button><br/>
-                    <button onClick={this.handleStart} data-setindex="1">Start Game With Big Money</button><br/>
-                    <button onClick={this.handleStart} data-setindex="2">Start Game With Interaction</button><br/>
+                    <button onClick={this.handleStart} data-setindex="0">Start Game "First Game"</button><br/>
+                    <button onClick={this.handleStart} data-setindex="1">Start Game "Size Distortion"</button><br/>
+                    <button onClick={this.handleStart} data-setindex="2">Start Game "Deck Top"</button><br/>
                     <button onClick={this.handleStart} data-setindex="3">Start Game With Size Distortion</button><br/>
                     <button onClick={this.handleStart} data-setindex="4">Start Game With Village Square</button><br/>
                     <button onClick={this.handleStart} data-setindex="5">Start Game With Hinterlands Intro</button><br/>

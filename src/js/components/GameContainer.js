@@ -187,14 +187,16 @@ class GameContainer extends Component {
 
     handActiveTest(card) {
         return this.props.gameState.thisPlayer.currentChoice == null &&
-            (this.props.gameState.thisPlayer.hasActions || card.type != "ACTION") &&
-            card.type != "VICTORY";
+            (this.props.gameState.thisPlayer.hasActions || !this.props.cardDefs[card].action) &&
+            !this.props.cardDefs[card].victory;
     }
 
     bankActiveTest(card) {
+		console.log(card);
+		console.log(this.props.cardDefs);
         return this.props.gameState.thisPlayer.currentChoice == null &&
             this.props.gameState.thisPlayer.hasBuys &&
-            this.props.gameState.thisPlayer.treasureAvailable >= card.cost;
+            this.props.gameState.thisPlayer.treasureAvailable >= this.props.cardDefs[card].cost;
     }
 
     render() {
@@ -212,22 +214,22 @@ class GameContainer extends Component {
                 <PlayerList currentPlayerIndex={gameState.currentPlayerIndex} playerNames={gameState.playerNames} />
                 
                 <TurnDashboard playerState={playerState} isCurrentPlayer={gameState.isCurrentPlayer} />
-                <div style={{clear:"both"}}><Bank cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} activeTest={this.bankActiveTest} name="Bank" onCardClick={this.handleBuyCard} /></div>
+                <div style={{clear:"both"}}><Bank cardDefs={this.props.cardDefs} cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} activeTest={this.bankActiveTest} name="Bank" onCardClick={this.handleBuyCard} /></div>
                 <div className="card-set-container1">
-                    <CardSet className="card-set-hand" cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer && playerState.currentChoice == null} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/>
-                    <CardSet className="card-set-played" cards={playerState.played} faceUp={true} active={false} name="Played"/>                    
+                    <CardSet className="card-set-hand" cardDefs={this.props.cardDefs} cards={playerState.hand} faceUp={true} active={gameState.isCurrentPlayer && playerState.currentChoice == null} activeTest={this.handActiveTest} name="Hand" onCardClick={this.handlePlayCard}/>
+                    <CardSet className="card-set-played" cardDefs={this.props.cardDefs} cards={playerState.played} faceUp={true} active={false} name="Played"/>                    
                 </div>
                 <div className="clean-up-container">
                 	<button onClick={this.handleCleanup}>Clean Up</button>
             	</div>
                 <div className="card-set-container2">
-                    <CardSet className="card-set-deck" cards={playerState.deck} faceUp={false} active={false} name="Deck" />
-                    <CardSet className="card-set-bought" cards={playerState.bought} faceUp={true} active={false} name="Bought"/>
-                    <CardSet className="card-set-discard" cards={playerState.discard} faceUp={false} active={false} name="Discard"/>
+                    <CardSet className="card-set-deck" cardDefs={this.props.cardDefs} cards={playerState.deck} faceUp={false} active={false} name="Deck" />
+                    <CardSet className="card-set-bought" cardDefs={this.props.cardDefs} cards={playerState.bought} faceUp={true} active={false} name="Bought"/>
+                    <CardSet className="card-set-discard" cardDefs={this.props.cardDefs} cards={playerState.discard} faceUp={false} active={false} name="Discard"/>
                 </div>
                 
                 <div style={{ clear:'both'}} />
-                <ActionChoices currentChoice={playerState.currentChoice} onOptionClick={this.handleAction}/>                
+                <ActionChoices currentChoice={playerState.currentChoice} onOptionClick={this.handleAction} cardDefs={this.props.cardDefs}/>                
                 
                 <div className="end-game-container">
                     <button onClick={this.handleEndGame}>End Game</button>

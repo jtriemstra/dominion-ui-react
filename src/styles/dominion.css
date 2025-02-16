@@ -129,6 +129,12 @@
 .actions-dialog .card-set input[type=checkbox], .actions-dialog .card-set input[type=radio]{
     margin-left:-20px;
 }
+.no-image-checkbox {
+	margin-left: 0px;
+}
+.no-image-choice {
+	display: inline-block;
+}
 
 .header{
     width:100%;

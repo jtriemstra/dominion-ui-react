@@ -9,17 +9,19 @@ class Bank extends CardSet {
     }
 
     renderInactiveCards(){
-        return this.props.cards.map((bankcard) => <li><img width="160px" src={this.getCardImageByName(bankcard.card.name)} /><span className="bank-quantity">{bankcard.quantity} left</span></li>);
+		let cardDefs = this.props.cardDefs;
+        return this.props.cards.map((bankcard) => <li><img width="160px" src={this.getCardImageByName(bankcard.name)} /><span className="bank-quantity">{bankcard.quantity} left</span></li>);
     }
 
     renderActiveCards(){
+		let cardDefs = this.props.cardDefs;
         if (this.props.activeTest){
             return this.props.cards.map((bankcard) => {
-                if (this.props.activeTest(bankcard.card) && bankcard.quantity > 0){
-                    return <li className="card-active"><a href="#" data-cardname={bankcard.card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(bankcard.card.name)} /></a><span className="bank-quantity">{bankcard.quantity} left</span></li>
+                if (this.props.activeTest(bankcard.name) && bankcard.quantity > 0){
+                    return <li className="card-active"><a href="#" data-cardname={bankcard.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(bankcard.name)} /></a><span className="bank-quantity">{bankcard.quantity} left</span></li>
                 }
                 else {
-                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(bankcard.card.name)} /><span className="bank-quantity">{bankcard.quantity} left</span></li>
+                    return <li className="card-inactive"><img width="160px" src={this.getCardImageByName(bankcard.name)} /><span className="bank-quantity">{bankcard.quantity} left</span></li>
                 }
             }
                 
@@ -27,7 +29,7 @@ class Bank extends CardSet {
         }
 
         return this.props.cards.map((bankcard) => 
-            <li><a href="#" data-cardname={bankcard.card.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(bankcard.card.name)} /></a></li>
+            <li><a href="#" data-cardname={bankcard.name} onClick={this.handleCardClick}><img width="160px" src={this.getCardImageByName(bankcard.name)} /></a></li>
         );
     }
 }
