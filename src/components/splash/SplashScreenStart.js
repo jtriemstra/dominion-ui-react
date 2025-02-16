@@ -14,7 +14,7 @@ function handleStart(event, api, cardSetIndex, setGameState, setEndingGame){
                 "Artisan,Bureaucrat,Council Room,Festival,Harbinger,Laboratory,Moneylender,Sentry,Vassal,Village",
                 "Cellar,Council Room,Festival,Gardens,Library,Harbinger,Militia,Poacher,Smithy,Throne Room",
                 "Berserker,Highway,Nomads,Oasis,Trail,Cellar,Library,Moneylender,Throne Room,Workshop",
-                "Crossroads,Fools Gold,Guard Dog,Souk,Witchs Hut,Festival,Laboratory,Remodel,Sentry,Vassal",
+                "Border Village,Cauldron,Fools Gold,Haggler,Highway,Scheme,Souk,Trader,Trail,Wheelwright",
                 ""];
     loadGame(api, playerName, "start", false, sets[cardSetIndex], setGameState, setEndingGame);
 }
@@ -38,7 +38,8 @@ export default function SplashScreenStart({setGameState, api = new Api(), setEnd
             <button onClick={ e=> handleStart(e, api, 3, setGameState, setEndingGame)}>Start Game "Sleight of Hand"</button> (Cellar,Council Room,Festival,Gardens,Library,Harbinger,Militia,Poacher,Smithy,Throne Room)<br/>
             <h2>Base Game, 2nd Ed. with Hinterlands, 2nd Ed.</h2>
             <button onClick={ e=> handleStart(e, api, 4, setGameState, setEndingGame)}>Start Game With "Happy Trails"</button> (Berserker,Highway,Nomads,Oasis,Trail,Cellar,Library,Moneylender,Throne Room,Workshop)<br/>
-            <button onClick={ e=> handleStart(e, api, 5, setGameState, setEndingGame)}>Start Game With "Adventures Abroad"</button> (Crossroads,Fools Gold,Guard Dog,Souk,Witchs Hut,Festival,Laboratory,Remodel,Sentry,Vassal)<br/>            
+            <h2>Hinterlands, 2nd Ed.</h2>
+            <button onClick={ e=> handleStart(e, api, 5, setGameState, setEndingGame)}>Start Game With "Bargains"</button> (Border Village,Cauldron,Fools Gold,Haggler,Highway,Scheme,Souk,Trader,Trail,Wheelwright)<br/>            
         </div>
     );
 }
