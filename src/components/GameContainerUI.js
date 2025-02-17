@@ -32,12 +32,12 @@ export default function GameContainerUI({gameState, setGameState, cardDefs, bank
         <div className={"game-container " + currentPlayerClass}>
             
                 <PlayerList currentPlayerIndex={gameState.currentPlayerIndex} playerNames={gameState.playerNames} />
-                <TurnDashboard playerState={gameState.thisPlayer} isCurrentPlayer={gameState.isCurrentPlayer} />
-                <div style={{clear:"both"}}><Bank cardDefs={cardDefs} cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" activeTest={(card) => {return bankActiveTest(card, cardDefs, gameState);}} /></div>
                 <div style={{clear:"both"}} className="notifications card-set">
                     <h2>Activity</h2>
                     <Notifications api={api} />
                 </div>
+                <TurnDashboard playerState={gameState.thisPlayer} isCurrentPlayer={gameState.isCurrentPlayer} />
+                <div style={{clear:"both"}}><Bank cardDefs={cardDefs} cards={bank} faceUp={true} active={playerState.hasBuys && playerState.currentChoice == null && gameState.isCurrentPlayer} name="Bank" activeTest={(card) => {return bankActiveTest(card, cardDefs, gameState);}} /></div>
                 <div style={{clear:"both"}}>
                     <ActionChoices currentChoice={playerState.currentChoice} cardDefs={cardDefs} looking={gameState.thisPlayer.looking} /> 
                 </div>

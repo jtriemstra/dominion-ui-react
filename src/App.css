@@ -113,7 +113,16 @@ button {
   
   width:98%;*/
   overflow:scroll;
-  max-height:350px;
+  max-height:300px;
+  font-family: optimusPrinceps;
+  font-size: .9em;
+}
+.notifications p {
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+.notifications h2 {
+  margin-bottom: 0px;
 }
 .current-player-false .card-set-played {
   /*height:15%;*/
